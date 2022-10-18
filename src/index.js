@@ -4,11 +4,15 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const mongodbRoute = `mongodb+srv://${process.env.USERNAMEBD}:${process.env.PASSWORD}@e4p1.gye2wcf.mongodb.net/JoshuApp`;
 
+const userRouter = require('./routes/workoutRoutes');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
+
+app.use("/api/users", userRouter);
 
 async function start() {
   try {
