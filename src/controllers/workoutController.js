@@ -16,6 +16,38 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+const getOneUser = async (req, res) => {
+    const {params: { userId }} = req;
+
+    if (!userId) {
+        return res
+            .status(400)
+            .send({
+                status: "FAILED",
+                data: { error: "Parameter ':userId' can not be empty" }
+            });
+    }
+
+    try {
+        const user = await userService.getOneUser(userId);
+        if (!user) {
+            return res
+            .status(404)
+            .send({ status: "FAILED",
+                    data: { error: `Can't find user with the id '${userId}'` } });
+        }
+
+        res.send({ status: "OK", data: user });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED",
+                message: "Error al realizar la petición:",
+                data: { error: error?.message || error } });
+    }
+}
+
 module.exports = {
-    getAllUsers
+    getAllUsers,
+    getOneUser
 }
