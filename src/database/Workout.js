@@ -18,7 +18,38 @@ const getOneUser = async userId => {
     }
 }
 
+const createNewUser = async newUser => {
+    try {
+        let userToInsert = new User(newUser);
+        const createdUser = await userToInsert.save();
+        return createdUser;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const updateOneUser = async (userId, changes) => {
+    try {
+        let updatedWorkout = await User.findByIdAndUpdate(userId, {$set:changes}, {new:true});
+        return updatedWorkout;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const deleteOneUser = async userId => {
+    try {
+        let deletedUser = await User.findByIdAndRemove(userId);
+        return deletedUser;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     getAllUsers,
-    getOneUser
+    getOneUser,
+    createNewUser,
+    updateOneUser,
+    deleteOneUser
 }

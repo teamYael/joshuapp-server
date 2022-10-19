@@ -47,7 +47,129 @@ const getOneUser = async (req, res) => {
     }
 }
 
+const createNewUser = async (req, res) => {
+    const { body } = req;
+    if (
+        !body.idToken ||
+        !body.name ||
+        !body.surname ||
+        !body.email ||
+        !body.active
+    ) {
+        res
+        .status(400)
+        .send({
+            status: "FAILED",
+            data: {
+                error: "One of the following keys is missing or is empty in request body: 'name', 'surname', 'email'"
+            }
+        });
+        return;
+    }
+
+    const newUser = {
+        idToken: body.idToken,
+        name: body.name,
+        surname: body.surname,
+        email: body.email,
+        active: body.active
+    };
+
+    try {
+        const createdUser = await userService.createNewUser(newUser);
+        res.status(201).send({ status: "OK", data: createdUser });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED",
+                message: "Error al realizar la petición:",
+                data: { error: error?.message || error } })
+    }
+}
+
+const updateOneUser = async (req, res) => {
+    const {
+        body,
+        params: { userId }
+    } = req;
+
+    if (!userId) {
+        return res
+            .status(400)
+            .send({
+                status: "FAILED",
+                data: {
+                    error: "Parameter ':userId' can not be empty"
+                }
+            });
+    }
+
+    try {
+        const updatedUser = await userService.updateOneUser(userId, body);
+
+        if (!updatedUser) {
+            return res
+            .status(404)
+            .send({
+                status: "FAILED",
+                data: {
+                    error: `Can't find user with the id '${userId}'`
+                }
+            });
+        }
+
+        res.send({ status: "OK", data: updatedUser });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED",
+                message: "Error al realizar la petición:",
+                data: { error: error?.message || error } })
+    }
+}
+
+const deleteOneUser = async (req, res) => {
+    const { params:  { userId } } = req;
+
+    if (!userId) {
+        return res
+            .status(400)
+            .send({
+                status: "FAILED",
+                data: {
+                    error: "Parameter ':userId' can not be empty"
+                }
+            });
+    }
+
+    try {
+        const deletedUser = await userService.deleteOneUser(userId);
+
+        if (!deletedUser) {
+            return res
+            .status(404)
+            .send({
+                status: "FAILED",
+                data: {
+                    error: `Can't find user with the id '${userId}'`
+                }
+            });
+        }
+
+        res.status(200).send({ status: "OK", data: deletedUser });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED",
+                message: "Error al realizar la petición:",
+                data: { error: error?.message || error } })
+    }
+}
+
 module.exports = {
     getAllUsers,
-    getOneUser
+    getOneUser,
+    createNewUser,
+    updateOneUser,
+    deleteOneUser
 }

@@ -18,7 +18,37 @@ const getOneUser = async userId => {
     }
 }
 
+const createNewUser = async newUser => {
+    try {
+        const createdUser = User.createNewUser(newUser);
+        return createdUser;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const updateOneUser = async (userId, changes) => {
+    try {
+        const updatedUser = User.updateOneUser(userId, changes);
+        return updatedUser;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const deleteOneUser = async userId => {
+    try {
+        let deletedUser = User.deleteOneUser(userId);
+        return deletedUser;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     getAllUsers,
-    getOneUser
+    getOneUser,
+    createNewUser,
+    updateOneUser,
+    deleteOneUser
 }
