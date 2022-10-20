@@ -28,10 +28,30 @@ const createNewUser = async newUser => {
     }
 }
 
+
+const loginUser = async newUser => {
+    try {
+        const user = User.findOne({idToken: newUser.idToken});
+        if (!user) {
+            let userToInsert = new User(newUser);
+            const createdUser = await userToInsert.save();
+            return createdUser;
+        }
+        let updatedUser = await User.findOneAndUpdate(
+            {idToken: newUser.idToken},
+            {active: newUser.active},
+            {new: true}
+        )
+        return updatedUser;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const updateOneUser = async (userId, changes) => {
     try {
-        let updatedWorkout = await User.findByIdAndUpdate(userId, {$set:changes}, {new:true});
-        return updatedWorkout;
+        let updatedUser = await User.findByIdAndUpdate(userId, {$set:changes}, {new:true});
+        return updatedUser;
     } catch (error) {
         throw error;
     }
@@ -50,6 +70,7 @@ module.exports = {
     getAllUsers,
     getOneUser,
     createNewUser,
+    loginUser,
     updateOneUser,
     deleteOneUser
 }
