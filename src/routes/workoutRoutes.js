@@ -7,7 +7,7 @@ router.get("/", userController.getAllUsers);
 
 router.get("/:userId", userController.getOneUser);
 
-router.post("/", userController.createNewUser);
+router.post("/token", middleware, userController.createNewUser);
 
 router.patch("/:userId", userController.updateOneUser);
 
