@@ -89,9 +89,9 @@ const loginUser = async (req, res) => {
     const { body } = req;
 
     if (
-        !body.idToken ||
-        !body.name ||
-        !body.email
+        !body.token ||
+        !body.claims.name ||
+        !body.claims.email
     ) {
         return res
         .status(400)
@@ -104,10 +104,10 @@ const loginUser = async (req, res) => {
     }
 
     const newUser = {
-        idToken: body.idToken,
-        name: body.name,
-        email: body.email,
-        joshua: body.email === process.env.ROL_JOSHUA ? true : false,
+        token: body.token,
+        name: body.claims.name,
+        email: body.claims.email,
+        joshua: body.claims.email === process.env.ROL_JOSHUA ? true : false,
         active: true
     };
 
