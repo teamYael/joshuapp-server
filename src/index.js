@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.use("/api/users", userRouter);
+app.use("/api", userRouter);
 
 async function start() {
   try {
