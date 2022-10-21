@@ -1,4 +1,4 @@
-const User = require('../database/Workout');
+const User = require('../database/User');
 
 const getAllUsers = async () => {
     try {
@@ -27,6 +27,15 @@ const createNewUser = async newUser => {
     }
 }
 
+const loginUser = async newUser => {
+    try {
+        const createdUser = User.loginUser(newUser);
+        return createdUser;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const updateOneUser = async (userId, changes) => {
     try {
         const updatedUser = User.updateOneUser(userId, changes);
@@ -49,6 +58,7 @@ module.exports = {
     getAllUsers,
     getOneUser,
     createNewUser,
+    loginUser,
     updateOneUser,
     deleteOneUser
 }

@@ -1,4 +1,4 @@
-const userService = require('../services/workoutService');
+const userService = require('../services/userService');
 
 const getAllUsers = async (req, res) => {
     try {
@@ -52,9 +52,7 @@ const createNewUser = async (req, res) => {
     if (
         !body.idToken ||
         !body.name ||
-        !body.surname ||
-        !body.email ||
-        !body.active
+        !body.email
     ) {
         res
         .status(400)
@@ -70,13 +68,51 @@ const createNewUser = async (req, res) => {
     const newUser = {
         idToken: body.idToken,
         name: body.name,
-        surname: body.surname,
         email: body.email,
-        active: body.active
+        active: false
     };
 
     try {
         const createdUser = await userService.createNewUser(newUser);
+        res.status(201).send({ status: "OK", data: createdUser });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED",
+                message: "Error al realizar la petición:",
+                data: { error: error?.message || error } })
+    }
+}
+
+// Function to insert user by token
+const loginUser = async (req, res) => {
+    const { body } = req;
+
+    if (
+        !body.idToken ||
+        !body.name ||
+        !body.email
+    ) {
+        return res
+        .status(400)
+        .send({
+            status: "FAILED",
+            data: {
+                error: "One of the following keys is missing or is empty in request body: 'idToken', 'name', 'email'"
+            }
+        });
+    }
+
+    const newUser = {
+        idToken: body.idToken,
+        name: body.name,
+        email: body.email,
+        joshua: body.email === process.env.ROL_JOSHUA ? true : false,
+        active: true
+    };
+
+    try {
+        const createdUser = await userService.loginUser(newUser);
         res.status(201).send({ status: "OK", data: createdUser });
     } catch (error) {
         res
@@ -170,6 +206,7 @@ module.exports = {
     getAllUsers,
     getOneUser,
     createNewUser,
+    loginUser,
     updateOneUser,
     deleteOneUser
 }

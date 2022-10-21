@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 const {verifyToken} = require('../middleware/verifyToken');
 
-const userController = require('../controllers/workoutController');
+const userController = require('../controllers/userController');
 
 router.get("/", userController.getAllUsers);
 
 router.get("/:userId", userController.getOneUser);
 
 router.post("/token", verifyToken, userController.createNewUser);
+
+router.post("/token", userController.loginUser);
 
 router.patch("/:userId", userController.updateOneUser);
 
