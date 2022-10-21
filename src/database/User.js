@@ -1,4 +1,4 @@
-const User = require('../models/workoutModel');
+const User = require('../models/userModel');
 
 const getAllUsers = async () => {
     try {
@@ -31,7 +31,7 @@ const createNewUser = async newUser => {
 
 const loginUser = async newUser => {
     try {
-        const user = User.findOne({idToken: newUser.idToken});
+        const user = await User.findOne({ idToken: newUser.idToken });
         if (!user) {
             let userToInsert = new User(newUser);
             const createdUser = await userToInsert.save();

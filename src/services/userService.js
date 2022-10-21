@@ -1,4 +1,4 @@
-const User = require('../database/Workout');
+const User = require('../database/User');
 
 const getAllUsers = async () => {
     try {

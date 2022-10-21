@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const mongodbRoute = `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@e4p1.gye2wcf.mongodb.net/JoshuApp`;
 
-const userRouter = require('./routes/workoutRoutes');
+const userRouter = require('./routes/userRoutes');
 
 
 const app = express();
