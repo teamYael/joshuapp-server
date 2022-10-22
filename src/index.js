@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const mongodbRoute = `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@e4p1.zrnbvtk.mongodb.net/?retryWrites=true&w=majority`;
+const mongodbRoute = `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@e4p1.gye2wcf.mongodb.net/JoshuApp`;
 
 const userRouter = require('./routes/userRoutes');
 
@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.use("/api/users", userRouter);
+app.use("/api", userRouter);
 
 async function start() {
   try {

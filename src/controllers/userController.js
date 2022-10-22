@@ -47,43 +47,6 @@ const getOneUser = async (req, res) => {
     }
 }
 
-const createNewUser = async (req, res) => {
-    const { body } = req;
-    if (
-        !body.idToken ||
-        !body.name ||
-        !body.email
-    ) {
-        res
-        .status(400)
-        .send({
-            status: "FAILED",
-            data: {
-                error: "One of the following keys is missing or is empty in request body: 'name', 'surname', 'email'"
-            }
-        });
-        return;
-    }
-
-    const newUser = {
-        idToken: body.idToken,
-        name: body.name,
-        email: body.email,
-        active: false
-    };
-
-    try {
-        const createdUser = await userService.createNewUser(newUser);
-        res.status(201).send({ status: "OK", data: createdUser });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED",
-                message: "Error al realizar la petición:",
-                data: { error: error?.message || error } })
-    }
-}
-
 // Function to insert user by token
 const loginUser = async (req, res) => {
     const { body } = req;
@@ -165,7 +128,7 @@ const updateOneUser = async (req, res) => {
 }
 
 const deleteOneUser = async (req, res) => {
-    const { params:  { userId } } = req;
+    const { params: { userId } } = req;
 
     if (!userId) {
         return res
@@ -205,7 +168,6 @@ const deleteOneUser = async (req, res) => {
 module.exports = {
     getAllUsers,
     getOneUser,
-    createNewUser,
     loginUser,
     updateOneUser,
     deleteOneUser

@@ -18,20 +18,9 @@ const getOneUser = async userId => {
     }
 }
 
-const createNewUser = async newUser => {
-    try {
-        let userToInsert = new User(newUser);
-        const createdUser = await userToInsert.save();
-        return createdUser;
-    } catch (error) {
-        throw error;
-    }
-}
-
-
 const loginUser = async newUser => {
     try {
-        const user = await User.findOne({ idToken: newUser.token });
+        const user = await User.findOne({ token: newUser.token });
         if (!user) {
             let userToInsert = new User(newUser);
             const createdUser = await userToInsert.save();
@@ -69,7 +58,6 @@ const deleteOneUser = async userId => {
 module.exports = {
     getAllUsers,
     getOneUser,
-    createNewUser,
     loginUser,
     updateOneUser,
     deleteOneUser

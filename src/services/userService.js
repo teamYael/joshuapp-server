@@ -18,15 +18,6 @@ const getOneUser = async userId => {
     }
 }
 
-const createNewUser = async newUser => {
-    try {
-        const createdUser = User.createNewUser(newUser);
-        return createdUser;
-    } catch (error) {
-        throw error;
-    }
-}
-
 const loginUser = async newUser => {
     try {
         const createdUser = User.loginUser(newUser);
@@ -57,7 +48,6 @@ const deleteOneUser = async userId => {
 module.exports = {
     getAllUsers,
     getOneUser,
-    createNewUser,
     loginUser,
     updateOneUser,
     deleteOneUser
