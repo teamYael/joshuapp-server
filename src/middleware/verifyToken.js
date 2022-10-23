@@ -1,14 +1,14 @@
 const admin = require("firebase-admin");
-const { initializeApp } = require('firebase-admin/app');
-// const { getAuth } = require("firebase/auth");
 
-initializeApp();
+admin.initializeApp({
+  projectId: 'joshuappaeg'
+});
 
-const verifyToken = (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   const token = req.body.token;
   console.log(token);
 
-  admin.auth().verifyIdToken(token).then(decodedToken => {
+  await admin.auth().verifyIdToken(token).then(decodedToken => {
     console.log(decodedToken);
     const uid = decodedToken.uid;
     console.log(uid);
