@@ -28,7 +28,7 @@ const loginUser = async newUser => {
         }
         let updatedUser = await User.findOneAndUpdate(
             {token: newUser.token},
-            {token: newUser.token, active: newUser.active},
+            {$set: newUser},
             {new: true}
         )
         return updatedUser;
