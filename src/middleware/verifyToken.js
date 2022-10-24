@@ -1,7 +1,8 @@
 const admin = require("firebase-admin");
+const serviceAccount = require("../../serviceAccountKey.json");
 
 admin.initializeApp({
-  projectId: 'joshuappaeg'
+  credential: admin.credential.cert(serviceAccount)
 });
 
 const verifyToken = async (req, res, next) => {
