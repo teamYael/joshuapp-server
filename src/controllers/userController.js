@@ -71,7 +71,7 @@ const loginUser = async (req, res) => {
         name: body.claims.name,
         email: body.claims.email,
         joshua: body.claims.email === process.env.ROL_JOSHUA ? true : false,
-        active: true
+        active: false
     };
 
     try {
