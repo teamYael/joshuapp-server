@@ -20,7 +20,7 @@ const getOneUser = async userId => {
 
 const loginUser = async newUser => {
     try {
-        const user = await User.findOne({ token: newUser.token });
+        const user = await User.findOne({ email: newUser.email });
         if (!user) {
             let userToInsert = new User(newUser);
             const createdUser = await userToInsert.save();
@@ -28,7 +28,7 @@ const loginUser = async newUser => {
         }
         let updatedUser = await User.findOneAndUpdate(
             {token: newUser.token},
-            {active: newUser.active},
+            {token: newUser.token, active: newUser.active},
             {new: true}
         )
         return updatedUser;
