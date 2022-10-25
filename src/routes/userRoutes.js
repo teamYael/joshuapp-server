@@ -8,6 +8,8 @@ router.get("/users", userController.getAllUsers);
 
 router.get("/users/:userId", userController.getOneUser);
 
+router.get("/acolits", userController.getAcolitsUsers);
+
 router.post("/token", verifyToken, userController.loginUser);
 
 router.patch("/users/:userId", userController.updateOneUser);
