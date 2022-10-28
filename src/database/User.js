@@ -20,7 +20,7 @@ const getOneUser = async userId => {
 
 const loginUser = async newUser => {
     try {
-        const user = await User.findOne({ token: newUser.token });
+        const user = await User.findOne({ email: newUser.email });
         if (!user) {
             let userToInsert = new User(newUser);
             const createdUser = await userToInsert.save();
