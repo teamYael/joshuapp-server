@@ -26,9 +26,10 @@ const loginUser = async newUser => {
             const createdUser = await userToInsert.save();
             return createdUser;
         }
+        newUser.active= true;
         let updatedUser = await User.findOneAndUpdate(
-            {token: newUser.token},
-            {active: newUser.active},
+            {email: newUser.email},
+            {$set: newUser},
             {new: true}
         )
         return updatedUser;
