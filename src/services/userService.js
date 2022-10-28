@@ -9,6 +9,15 @@ const getAllUsers = async () => {
     }
 }
 
+const getAcolitsUsers = async () => {
+    try {
+        const acolitsUsers = User.getAcolitsUsers();
+        return acolitsUsers;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const getOneUser = async userId => {
     try {
         const user = User.getOneUser(userId);
@@ -50,5 +59,6 @@ module.exports = {
     getOneUser,
     loginUser,
     updateOneUser,
-    deleteOneUser
+    deleteOneUser,
+    getAcolitsUsers
 }
