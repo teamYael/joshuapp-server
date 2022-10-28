@@ -71,7 +71,11 @@ const loginUser = async (req, res) => {
         name: body.claims.name,
         email: body.claims.email,
         joshua: body.claims.email === process.env.ROL_JOSHUA ? true : false,
-        active: false
+        active: false,
+        avatar: body.claims.picture,
+        life: 100,
+        money: 29,
+        onCrypt: false
     };
 
     try {

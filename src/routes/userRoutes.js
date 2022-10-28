@@ -8,7 +8,7 @@ router.get("/users", userController.getAllUsers);
 
 router.get("/users/:userId", userController.getOneUser);
 
-router.post("/token", verifyToken, userController.loginUser);
+router.post("/token", /*verifyToken,*/ userController.loginUser);
 
 router.patch("/users/:userId", userController.updateOneUser);
 
