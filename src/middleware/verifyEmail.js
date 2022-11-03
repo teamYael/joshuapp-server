@@ -2,7 +2,7 @@
 const verifyEmail = async (req, res, next) => {
 
     const email = req.body.claims.email;
-    console.log(email);
+    // console.log(email);
 
     const aegStudentEmail = '@ikasle.aeg.eus';
     const aegTeacherEmail = '@aeg.eus';
