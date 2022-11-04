@@ -45,6 +45,16 @@ const updateOneUser = async (userId, changes) => {
     }
 }
 
+const updateMoney= async (userEmail, ChangeMoney) =>{
+    try {
+        const updatedMoney=User.updateMoney(userEmail, ChangeMoney);
+        return updatedMoney;
+        
+    } catch (error) {
+        throw error;
+    }
+}
+
 const deleteOneUser = async userId => {
     try {
         let deletedUser = User.deleteOneUser(userId);
@@ -59,6 +69,7 @@ module.exports = {
     getOneUser,
     loginUser,
     updateOneUser,
+    updateMoney,
     deleteOneUser,
     getAcolitsUsers
 }

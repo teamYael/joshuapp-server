@@ -147,6 +147,47 @@ const updateOneUser = async (req, res) => {
     }
 }
 
+const updateMoney = async(req,res)=>{
+    const {
+        body,
+        params: { userEmail }
+    } = req;
+
+    if (!userEmail) {
+        return res
+            .status(400)
+            .send({
+                status: "FAILED",
+                data: {
+                    error: "Parameter ':userEmail' can not be empty"
+                }
+            });
+    }
+
+    try {
+        const updatedMoney = await userService.updateMoney(userEmail, body);
+
+        if (!updatedMoney) {
+            return res
+            .status(404)
+            .send({
+                status: "FAILED",
+                data: {
+                    error: `Can't find user with the email '${userEmail}'`
+                }
+            });
+        }
+
+        res.send({ status: "OK", data: updatedMoney });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED",
+                message: "Error al realizar la petición:",
+                data: { error: error?.message || error } })
+    }
+}
+
 const deleteOneUser = async (req, res) => {
     const { params: { userId } } = req;
 
@@ -190,6 +231,7 @@ module.exports = {
     getOneUser,
     loginUser,
     updateOneUser,
+    updateMoney,
     deleteOneUser,
     getAcolitsUsers
 }
