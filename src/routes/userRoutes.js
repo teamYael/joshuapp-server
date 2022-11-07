@@ -14,9 +14,9 @@ router.get("/acolits", userController.getAcolitsUsers);
 
 router.post("/token", /*verifyToken,*/ verifyEmail, userController.loginUser);
 
-//  router.patch("/users/:userId", userController.updateOneUser);
+router.patch("/users/:userId", userController.updateOneUser);
 
-router.patch("/users/:userId", userController.updateMoney);
+router.patch("/users/update/:userEmail", userController.updateMoney);
 
 router.delete("/users/:userId", userController.deleteOneUser);
 
