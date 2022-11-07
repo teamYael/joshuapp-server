@@ -45,6 +45,15 @@ const updateOneUser = async (userId, changes) => {
     }
 }
 
+const updateUserActive = async (userEmail, changes) => {
+    try {
+        const updatedUser = User.updateUserActive(userEmail, changes);
+        return updatedUser;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const deleteOneUser = async userId => {
     try {
         let deletedUser = User.deleteOneUser(userId);
@@ -59,6 +68,7 @@ module.exports = {
     getOneUser,
     loginUser,
     updateOneUser,
+    updateUserActive,
     deleteOneUser,
     getAcolitsUsers
 }
