@@ -9,6 +9,15 @@ const getAllUsers = async () => {
     }
 }
 
+const getAcolitsUsers = async () => {
+    try {
+        const users = await User.find({joshua: false});
+        return users;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const getOneUser = async userId => {
     try {
         const user = await User.findById(userId);
@@ -26,8 +35,7 @@ const loginUser = async newUser => {
             const createdUser = await userToInsert.save();
             return createdUser;
         }
-
-        newUser.active = true;
+        newUser.active= true;
         let updatedUser = await User.findOneAndUpdate(
             {email: newUser.email},
             {$set: newUser},
@@ -62,5 +70,6 @@ module.exports = {
     getOneUser,
     loginUser,
     updateOneUser,
-    deleteOneUser
+    deleteOneUser,
+    getAcolitsUsers
 }

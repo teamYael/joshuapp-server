@@ -16,6 +16,22 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+const getAcolitsUsers = async (req, res) => {
+    try {
+        const allUsers = await userService.getAcolitsUsers();
+        if (allUsers.length === 0) {
+            return res.status(404).send({ message: "No existen usuarios" });
+        }
+        res.send({ status: "OK", data: allUsers });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED",
+                message: "Error al realizar la petición:",
+                data: { error: error?.message || error } });
+    }
+};
+
 const getOneUser = async (req, res) => {
     const {params: { userId }} = req;
 
@@ -71,7 +87,11 @@ const loginUser = async (req, res) => {
         name: body.claims.name,
         email: body.claims.email,
         joshua: body.claims.email === process.env.ROL_JOSHUA ? true : false,
-        active: false
+        active: false,
+        avatar: body.claims.picture,
+        life: 100,
+        money: 29,
+        onCrypt: false
     };
 
     try {
@@ -170,5 +190,6 @@ module.exports = {
     getOneUser,
     loginUser,
     updateOneUser,
-    deleteOneUser
+    deleteOneUser,
+    getAcolitsUsers
 }

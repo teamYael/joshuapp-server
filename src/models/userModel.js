@@ -6,7 +6,11 @@ const userSchema = new Schema({
     name: String,
     email: String,
     joshua: Boolean,
-    active: Boolean
+    active: Boolean,
+    avatar: String,
+    life: Number,
+    money: Number,
+    onCrypt: Boolean
 })
 
 module.exports = mongoose.model('User', userSchema);
