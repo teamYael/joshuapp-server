@@ -152,7 +152,7 @@ const updateMoney = async(req,res)=>{
         body,
         params: { userEmail }
     } = req;
-
+        console.log(body)
     if (!userEmail) {
         return res
             .status(400)
@@ -164,8 +164,13 @@ const updateMoney = async(req,res)=>{
             });
     }
 
+    const changeMoneyAndLife={
+        money: body.money,
+        life: body.life
+    }
+
     try {
-        const updatedMoney = await userService.updateMoney(userEmail, body);
+        const updatedMoney = await userService.updateMoney(userEmail, changeMoneyAndLife);
 
         if (!updatedMoney) {
             return res
