@@ -150,22 +150,22 @@ const updateOneUser = async (req, res) => {
 const updateMoney = async(req,res)=>{
     const {
         body,
-        params: { userEmail }
+        params: { userId }
     } = req;
 
-    if (!userEmail) {
+    if (!userId) {
         return res
             .status(400)
             .send({
                 status: "FAILED",
                 data: {
-                    error: "Parameter ':userEmail' can not be empty"
+                    error: "Parameter ':userId' can not be empty"
                 }
             });
     }
 
     try {
-        const updatedMoney = await userService.updateMoney(userEmail, body);
+        const updatedMoney = await userService.updateMoney(userId, body);
 
         if (!updatedMoney) {
             return res
@@ -173,7 +173,7 @@ const updateMoney = async(req,res)=>{
             .send({
                 status: "FAILED",
                 data: {
-                    error: `Can't find user with the email '${userEmail}'`
+                    error: `Can't find user with the email '${userId}'`
                 }
             });
         }

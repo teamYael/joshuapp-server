@@ -45,9 +45,9 @@ const updateOneUser = async (userId, changes) => {
     }
 }
 
-const updateMoney= async (userEmail, ChangeMoney) =>{
+const updateMoney= async (userId, ChangeMoney) =>{
     try {
-        const updatedMoney=User.updateMoney(userEmail, ChangeMoney);
+        const updatedMoney=User.updateMoney(userId, ChangeMoney);
         return updatedMoney;
         
     } catch (error) {

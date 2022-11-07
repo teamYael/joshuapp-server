@@ -56,11 +56,11 @@ const updateOneUser = async (userId, changes) => {
     }
 }
 
-const updateMoney = async (userEmail, ChangeMoney) => {
+const updateMoney = async (userId, changeMoney) => {
     try {
         let updatedMoney = await User.findOneAndUpdate(
-            {email: userEmail},
-            {$set: {money: ChangeMoney}},
+            userId,
+            {$set: {money: changeMoney}},
             {new: true}
         )
         return updatedMoney;
