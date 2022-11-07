@@ -96,6 +96,7 @@ const loginUser = async (req, res) => {
 
     try {
         const createdUser = await userService.loginUser(newUser);
+        
         res.status(201).send({ status: "OK", data: createdUser });
     } catch (error) {
         res
