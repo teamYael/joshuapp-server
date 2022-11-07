@@ -1,6 +1,6 @@
 # fly.toml file generated for absentia on 2022-10-30T18:54:55+01:00
 
-app = "JoshuApp-production"
+app = "joshuApp-production"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
