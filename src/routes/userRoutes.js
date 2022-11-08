@@ -16,7 +16,7 @@ router.get("/acolits", userController.getAcolitsUsers);
 
 router.post("/token", /*verifyToken,*/ verifyEmail, userController.loginUser);
 
-router.patch("/users/:userId", userController.updateOneUser);
+router.patch("/users/:userEmail", userController.updateOneUser);
 
 router.patch("/acolitstate/:userEmail", userController.updateUserActive);
 

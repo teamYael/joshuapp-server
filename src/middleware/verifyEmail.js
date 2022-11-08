@@ -1,8 +1,9 @@
 
 const verifyEmail = async (req, res, next) => {
+  // console.log(req.body.claims.email)
 
     const email = req.body.claims.email;
-    // console.log(email);
+    //  console.log(`este es el email ${email}`);
 
     const aegStudentEmail = '@ikasle.aeg.eus';
     const aegTeacherEmail = '@aeg.eus';

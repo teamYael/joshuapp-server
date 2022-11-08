@@ -56,18 +56,14 @@ const loginUser = async (newUser) => {
   }
 };
 
-const updateOneUser = async (userId, changes) => {
-  try {
-    let updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { $set: changes },
-      { new: true }
-    );
-    return updatedUser;
-  } catch (error) {
-    throw error;
-  }
-};
+const updateOneUser = async (userEmail, changes) => {
+    try {
+        let updatedUser = await User.findOneAndUpdate({email:userEmail}, {$set:changes}, {new:true});
+        return updatedUser;
+    } catch (error) {
+        throw error;
+    }
+}
 
 const updateUserActive = async (userEmail, changes) => {
   try {

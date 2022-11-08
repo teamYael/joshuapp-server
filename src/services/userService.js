@@ -45,9 +45,9 @@ const loginUser = async newUser => {
     }
 }
 
-const updateOneUser = async (userId, changes) => {
+const updateOneUser = async (userEmail, changes) => {
     try {
-        const updatedUser = User.updateOneUser(userId, changes);
+        const updatedUser = User.updateOneUser(userEmail, changes);
         return updatedUser;
     } catch (error) {
         throw error;
