@@ -63,6 +63,37 @@ const getOneUser = async (req, res) => {
   }
 };
 
+const getOneAcolit = async (req, res) => {
+  const {
+    params: { gmail },
+  } = req;
+
+  if (!gmail) {
+    return res.status(400).send({
+      status: "FAILED",
+      data: { error: "Parameter ':gmail' can not be empty" },
+    });
+  }
+
+  try {
+    const user = await userService.getOneAcolit(gmail);
+    if (!user) {
+      return res.status(404).send({
+        status: "FAILED",
+        data: { error: `Can't find user with the id '${gmail}'` },
+      });
+    }
+
+    res.send({ status: "OK", data: user });
+  } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Error al realizar la petición:",
+      data: { error: error?.message || error },
+    });
+  }
+};
+
 // Function to insert user by token
 const loginUser = async (req, res) => {
   const { body } = req;
@@ -219,4 +250,5 @@ module.exports = {
   updateUserActive,
   deleteOneUser,
   getAcolitsUsers,
+  getOneAcolit
 };

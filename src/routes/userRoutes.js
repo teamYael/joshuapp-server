@@ -10,6 +10,8 @@ router.get("/users", userController.getAllUsers);
 
 router.get("/users/:userId", userController.getOneUser);
 
+router.get("/acolits/:gmail", userController.getOneAcolit);
+
 router.get("/acolits", userController.getAcolitsUsers);
 
 router.post("/token", /*verifyToken,*/ verifyEmail, userController.loginUser);

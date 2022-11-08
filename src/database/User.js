@@ -18,6 +18,15 @@ const getAcolitsUsers = async () => {
   }
 };
 
+const getOneAcolit = async (gmail) => {
+  try {
+    const users = await User.findOne({ email: gmail });
+    return users;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getOneUser = async (userId) => {
   try {
     const user = await User.findById(userId);
@@ -101,4 +110,5 @@ module.exports = {
   updateUserActive,
   deleteOneUser,
   getAcolitsUsers,
+  getOneAcolit
 };
