@@ -1,110 +1,105 @@
-const userService = require('../services/userService');
+const userService = require("../services/userService");
 
 const getAllUsers = async (req, res) => {
-    try {
-        const allUsers = await userService.getAllUsers();
-        if (allUsers.length === 0) {
-            return res.status(404).send({ message: "No existen usuarios" });
-        }
-        res.send({ status: "OK", data: allUsers });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED",
-                message: "Error al realizar la petición:",
-                data: { error: error?.message || error } });
+  try {
+    const allUsers = await userService.getAllUsers();
+    if (allUsers.length === 0) {
+      return res.status(404).send({ message: "No existen usuarios" });
     }
+    res.send({ status: "OK", data: allUsers });
+  } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Error al realizar la petición:",
+      data: { error: error?.message || error },
+    });
+  }
 };
 
 const getAcolitsUsers = async (req, res) => {
-    try {
-        const allUsers = await userService.getAcolitsUsers();
-        if (allUsers.length === 0) {
-            return res.status(404).send({ message: "No existen usuarios" });
-        }
-        res.send({ status: "OK", data: allUsers });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED",
-                message: "Error al realizar la petición:",
-                data: { error: error?.message || error } });
+  try {
+    const allUsers = await userService.getAcolitsUsers();
+    if (allUsers.length === 0) {
+      return res.status(404).send({ message: "No existen usuarios" });
     }
+    res.send({ status: "OK", data: allUsers });
+  } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Error al realizar la petición:",
+      data: { error: error?.message || error },
+    });
+  }
 };
 
 const getOneUser = async (req, res) => {
-    const {params: { userId }} = req;
+  const {
+    params: { userId },
+  } = req;
 
-    if (!userId) {
-        return res
-            .status(400)
-            .send({
-                status: "FAILED",
-                data: { error: "Parameter ':userId' can not be empty" }
-            });
+  if (!userId) {
+    return res.status(400).send({
+      status: "FAILED",
+      data: { error: "Parameter ':userId' can not be empty" },
+    });
+  }
+
+  try {
+    const user = await userService.getOneUser(userId);
+    if (!user) {
+      return res.status(404).send({
+        status: "FAILED",
+        data: { error: `Can't find user with the id '${userId}'` },
+      });
     }
 
-    try {
-        const user = await userService.getOneUser(userId);
-        if (!user) {
-            return res
-            .status(404)
-            .send({ status: "FAILED",
-                    data: { error: `Can't find user with the id '${userId}'` } });
-        }
-
-        res.send({ status: "OK", data: user });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED",
-                message: "Error al realizar la petición:",
-                data: { error: error?.message || error } });
-    }
-}
+    res.send({ status: "OK", data: user });
+  } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Error al realizar la petición:",
+      data: { error: error?.message || error },
+    });
+  }
+};
 
 // Function to insert user by token
 const loginUser = async (req, res) => {
-    const { body } = req;
+  const { body } = req;
 
-    if (
-        !body.token ||
-        !body.claims.name ||
-        !body.claims.email
-    ) {
-        return res
-        .status(400)
-        .send({
-            status: "FAILED",
-            data: {
-                error: "One of the following keys is missing or is empty in request body: 'idToken', 'name', 'email'"
-            }
-        });
-    }
+  if (!body.token || !body.claims.name || !body.claims.email) {
+    return res.status(400).send({
+      status: "FAILED",
+      data: {
+        error:
+          "One of the following keys is missing or is empty in request body: 'idToken', 'name', 'email'",
+      },
+    });
+  }
 
-    const newUser = {
-        token: body.token,
-        name: body.claims.name,
-        email: body.claims.email,
-        joshua: body.claims.email === process.env.ROL_JOSHUA ? true : false,
-        active: false,
-        avatar: body.claims.picture,
-        life: 100,
-        money: 29,
-        onCrypt: false
-    };
+  const newUser = {
+    token: body.token,
+    name: body.claims.name,
+    email: body.claims.email,
+    joshua: body.claims.email === process.env.ROL_JOSHUA ? true : false,
+    active: false,
+    avatar: body.claims.picture,
+    life: 100,
+    money: 29,
+    onCrypt: false,
+  };
 
-    try {
-        const createdUser = await userService.loginUser(newUser);
-        res.status(201).send({ status: "OK", data: createdUser });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED",
-                message: "Error al realizar la petición:",
-                data: { error: error?.message || error } })
-    }
-}
+  try {
+    const createdUser = await userService.loginUser(newUser);
+    res.status(201).send({ status: "OK", data: createdUser });
+  } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Error al realizar la petición:",
+      data: { error: error?.message || error },
+    });
+  }
+};
 
 const updateOneUser = async (req, res) => {
     const {
@@ -147,49 +142,85 @@ const updateOneUser = async (req, res) => {
     }
 }
 
+const updateUserActive = async (req, res) => {
+  const {
+    body,
+    params: { userEmail },
+  } = req;
+
+  if (!userEmail) {
+    return res.status(400).send({
+      status: "FAILED",
+      data: {
+        error: "Parameter ':userEmail' can not be empty",
+      },
+    });
+  }
+
+  try {
+    const updatedState = await userService.updateUserActive(userEmail, body);
+
+    if (!updatedState) {
+      return res.status(404).send({
+        status: "FAILED",
+        data: {
+          error: `Can't find user with the id '${userEmail}'`,
+        },
+      });
+    }
+
+    res.send({ status: "OK", data: updatedState });
+  } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Error al realizar la petición:",
+      data: { error: error?.message || error },
+    });
+  }
+};
+
 const deleteOneUser = async (req, res) => {
-    const { params: { userId } } = req;
+  const {
+    params: { userId },
+  } = req;
 
-    if (!userId) {
-        return res
-            .status(400)
-            .send({
-                status: "FAILED",
-                data: {
-                    error: "Parameter ':userId' can not be empty"
-                }
-            });
+  if (!userId) {
+    return res.status(400).send({
+      status: "FAILED",
+      data: {
+        error: "Parameter ':userId' can not be empty",
+      },
+    });
+  }
+
+  try {
+    const deletedUser = await userService.deleteOneUser(userId);
+
+    if (!deletedUser) {
+      return res.status(404).send({
+        status: "FAILED",
+        data: {
+          error: `Can't find user with the id '${userId}'`,
+        },
+      });
     }
 
-    try {
-        const deletedUser = await userService.deleteOneUser(userId);
-
-        if (!deletedUser) {
-            return res
-            .status(404)
-            .send({
-                status: "FAILED",
-                data: {
-                    error: `Can't find user with the id '${userId}'`
-                }
-            });
-        }
-
-        res.status(200).send({ status: "OK", data: deletedUser });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED",
-                message: "Error al realizar la petición:",
-                data: { error: error?.message || error } })
-    }
-}
+    res.status(200).send({ status: "OK", data: deletedUser });
+  } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Error al realizar la petición:",
+      data: { error: error?.message || error },
+    });
+  }
+};
 
 module.exports = {
-    getAllUsers,
-    getOneUser,
-    loginUser,
-    updateOneUser,
-    deleteOneUser,
-    getAcolitsUsers
-}
+  getAllUsers,
+  getOneUser,
+  loginUser,
+  updateOneUser,
+  updateUserActive,
+  deleteOneUser,
+  getAcolitsUsers,
+};
