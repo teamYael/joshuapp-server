@@ -109,50 +109,9 @@ const loginUser = async (req, res) => {
 const updateOneUser = async (req, res) => {
     const {
         body,
-        params: { userId }
-    } = req;
-
-    if (!userId) {
-        return res
-            .status(400)
-            .send({
-                status: "FAILED",
-                data: {
-                    error: "Parameter ':userId' can not be empty"
-                }
-            });
-    }
-
-    try {
-        const updatedUser = await userService.updateOneUser(userId, body);
-
-        if (!updatedUser) {
-            return res
-            .status(404)
-            .send({
-                status: "FAILED",
-                data: {
-                    error: `Can't find user with the id '${userId}'`
-                }
-            });
-        }
-
-        res.send({ status: "OK", data: updatedUser });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED",
-                message: "Error al realizar la petición:",
-                data: { error: error?.message || error } })
-    }
-}
-
-const updateMoney = async(req,res)=>{
-    const {
-        body,
         params: { userEmail }
     } = req;
-        console.log(body)
+
     if (!userEmail) {
         return res
             .status(400)
@@ -164,26 +123,21 @@ const updateMoney = async(req,res)=>{
             });
     }
 
-    const changeMoneyAndLife={
-        money: body.money,
-        life: body.life
-    }
-
     try {
-        const updatedMoney = await userService.updateMoney(userEmail, changeMoneyAndLife);
+        const updatedUser = await userService.updateOneUser(userEmail, body);
 
-        if (!updatedMoney) {
+        if (!updatedUser) {
             return res
             .status(404)
             .send({
                 status: "FAILED",
                 data: {
-                    error: `Can't find user with the email '${userEmail}'`
+                    error: `Can't find user with the id '${userEmail}'`
                 }
             });
         }
 
-        res.send({ status: "OK", data: updatedMoney });
+        res.send({ status: "OK", data: updatedUser });
     } catch (error) {
         res
         .status(error?.status || 500)
@@ -236,7 +190,6 @@ module.exports = {
     getOneUser,
     loginUser,
     updateOneUser,
-    updateMoney,
     deleteOneUser,
     getAcolitsUsers
 }

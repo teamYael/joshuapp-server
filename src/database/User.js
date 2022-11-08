@@ -47,24 +47,10 @@ const loginUser = async newUser => {
     }
 }
 
-const updateOneUser = async (userId, changes) => {
+const updateOneUser = async (userEmail, changes) => {
     try {
-        let updatedUser = await User.findByIdAndUpdate(userId, {$set:changes}, {new:true});
+        let updatedUser = await User.findOneAndUpdate({email:userEmail}, {$set:changes}, {new:true});
         return updatedUser;
-    } catch (error) {
-        throw error;
-    }
-}
-
-const updateMoney = async (userEmail, changeMoneyAndLife) => {
-    try {
-        let updatedMoney = await User.findOneAndUpdate(
-            {email: userEmail},
-            {$set: changeMoneyAndLife},
-            {new: true}
-        )
-        return updatedMoney;
-        
     } catch (error) {
         throw error;
     }
@@ -84,7 +70,6 @@ module.exports = {
     getOneUser,
     loginUser,
     updateOneUser,
-    updateMoney,
     deleteOneUser,
     getAcolitsUsers
 }

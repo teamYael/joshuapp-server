@@ -36,20 +36,10 @@ const loginUser = async newUser => {
     }
 }
 
-const updateOneUser = async (userId, changes) => {
+const updateOneUser = async (userEmail, changes) => {
     try {
-        const updatedUser = User.updateOneUser(userId, changes);
+        const updatedUser = User.updateOneUser(userEmail, changes);
         return updatedUser;
-    } catch (error) {
-        throw error;
-    }
-}
-
-const updateMoney= async (userEmail, changeMoneyAndLife) =>{
-    try {
-        const updatedMoney=User.updateMoney(userEmail, changeMoneyAndLife);
-        return updatedMoney;
-        
     } catch (error) {
         throw error;
     }
@@ -69,7 +59,6 @@ module.exports = {
     getOneUser,
     loginUser,
     updateOneUser,
-    updateMoney,
     deleteOneUser,
     getAcolitsUsers
 }
