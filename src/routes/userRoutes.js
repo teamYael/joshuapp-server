@@ -16,7 +16,7 @@ router.post("/token", /*verifyToken,*/ verifyEmail, userController.loginUser);
 
 router.patch("/users/:userId", userController.updateOneUser);
 
-router.patch("/users/update/:userEmail", userController.updateMoney);
+router.patch("/acolitstate/:userEmail", userController.updateUserActive);
 
 router.delete("/users/:userId", userController.deleteOneUser);
 

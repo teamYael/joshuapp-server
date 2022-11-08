@@ -45,11 +45,10 @@ const updateOneUser = async (userId, changes) => {
     }
 }
 
-const updateMoney= async (userEmail, changeMoneyAndLife) =>{
+const updateUserActive = async (userEmail, changes) => {
     try {
-        const updatedMoney=User.updateMoney(userEmail, changeMoneyAndLife);
-        return updatedMoney;
-        
+        const updatedUser = User.updateUserActive(userEmail, changes);
+        return updatedUser;
     } catch (error) {
         throw error;
     }
@@ -69,7 +68,7 @@ module.exports = {
     getOneUser,
     loginUser,
     updateOneUser,
-    updateMoney,
+    updateUserActive,
     deleteOneUser,
     getAcolitsUsers
 }
