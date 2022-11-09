@@ -13,4 +13,5 @@ const userSchema = new Schema({
     onCrypt: Boolean
 })
 
+
 module.exports = mongoose.model('User', userSchema);

@@ -9,7 +9,6 @@ const mongodbRoute = `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASS
 
 const userRouter = require('./routes/userRoutes');
 
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
