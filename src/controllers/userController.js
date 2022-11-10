@@ -173,7 +173,7 @@ const updateOneUser = async (req, res) => {
     }
 }
 
-const updateUserActive = async (req, res) => {
+const updateOnCrypt = async (req, res) => {
   const {
     body,
     params: { userEmail },
@@ -189,9 +189,9 @@ const updateUserActive = async (req, res) => {
   }
 
   try {
-    const updatedState = await userService.updateUserActive(userEmail, body);
+    const updatedOncrypt = await userService.updateOnCrypt(userEmail, body);
 
-    if (!updatedState) {
+    if (!updatedOncrypt) {
       return res.status(404).send({
         status: "FAILED",
         data: {
@@ -200,7 +200,7 @@ const updateUserActive = async (req, res) => {
       });
     }
 
-    res.send({ status: "OK", data: updatedState });
+    res.send({ status: "OK", data: updatedOncrypt });
   } catch (error) {
     res.status(error?.status || 500).send({
       status: "FAILED",
@@ -251,7 +251,7 @@ module.exports = {
   getOneUser,
   loginUser,
   updateOneUser,
-  updateUserActive,
+  updateOnCrypt,
   deleteOneUser,
   getAcolitsUsers,
   getOneAcolit

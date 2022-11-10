@@ -54,9 +54,9 @@ const updateOneUser = async (userEmail, changes) => {
     }
 }
 
-const updateUserActive = async (userEmail, changes) => {
+const updateOnCrypt = async (userEmail, changes) => {
     try {
-        const updatedUser = User.updateUserActive(userEmail, changes);
+        const updatedUser = User.updateOnCrypt(userEmail, changes);
         return updatedUser;
     } catch (error) {
         throw error;
@@ -78,7 +78,7 @@ module.exports = {
     getOneAcolit,
     loginUser,
     updateOneUser,
-    updateUserActive,
+    updateOnCrypt,
     deleteOneUser,
     getAcolitsUsers
 }
