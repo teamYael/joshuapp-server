@@ -65,21 +65,21 @@ const updateOneUser = async (userEmail, changes) => {
     }
 }
 
-const updateUserActive = async (userEmail, changes) => {
+const updateOnCrypt = async (userEmail, changes) => {
   try {
     let user = await User.findOne({email: userEmail});
-    let active_aux;
+    let oncrypt_aux;
 
-    if (!user.active) {
-      active_aux=true
+    if (user.onCrypt) {
+      oncrypt_aux=false
     } else {
-      active_aux=false
+      oncrypt_aux=true
     }
    
     let updatedUser = await User.findOneAndUpdate(
       { email: userEmail },
       {
-        $set: { active: active_aux}
+        $set: { onCrypt: oncrypt_aux}
       },
       {new: true}
     );
@@ -103,7 +103,7 @@ module.exports = {
   getOneUser,
   loginUser,
   updateOneUser,
-  updateUserActive,
+  updateOnCrypt,
   deleteOneUser,
   getAcolitsUsers,
   getOneAcolit
