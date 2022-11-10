@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-// const { verifyToken } = require('../middleware/verifyToken');
+ const { verifyToken } = require('../middleware/verifyToken');
 const { verifyEmail } = require('../middleware/verifyEmail');
 
 
@@ -14,7 +14,7 @@ router.get("/acolits/:gmail", userController.getOneAcolit);
 
 router.get("/acolits", userController.getAcolitsUsers);
 
-router.post("/token", /*verifyToken,*/ verifyEmail, userController.loginUser);
+router.post("/token", verifyToken, verifyEmail, userController.loginUser);
 
 router.patch("/users/:userEmail", userController.updateOneUser);
 

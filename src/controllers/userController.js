@@ -96,6 +96,7 @@ const getOneAcolit = async (req, res) => {
 
 // Function to insert user by token
 const loginUser = async (req, res) => {
+  console.log("LOGIN USER")
   const { body } = req;
 
   if (!body.token || !body.claims.name || !body.claims.email) {
@@ -111,8 +112,11 @@ const loginUser = async (req, res) => {
   const newUser = {
     token: body.token,
     name: body.claims.name,
-    email: body.claims.email,
-    joshua: body.claims.email === process.env.ROL_JOSHUA ? true : false,
+    email: body.claims.email, 
+    joshua: (body.claims.email === process.env.ROL_JOSHUA) ? true : 
+            (body.claims.email === process.env.ROL_MORTIMER) ? true : 
+            false,
+            
     active: false,
     avatar: body.claims.picture,
     life: 100,
