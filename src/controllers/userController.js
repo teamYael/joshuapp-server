@@ -1,21 +1,5 @@
 const userService = require("../services/userService");
 
-const getAllUsers = async (req, res) => {
-  try {
-    const allUsers = await userService.getAllUsers();
-    if (allUsers.length === 0) {
-      return res.status(404).send({ message: "No existen usuarios" });
-    }
-    res.send({ status: "OK", data: allUsers });
-  } catch (error) {
-    res.status(error?.status || 500).send({
-      status: "FAILED",
-      message: "Error al realizar la petición:",
-      data: { error: error?.message || error },
-    });
-  }
-};
-
 const getAcolitsUsers = async (req, res) => {
   try {
     const allUsers = await userService.getAcolitsUsers();
@@ -23,68 +7,6 @@ const getAcolitsUsers = async (req, res) => {
       return res.status(404).send({ message: "No existen usuarios" });
     }
     res.send({ status: "OK", data: allUsers });
-  } catch (error) {
-    res.status(error?.status || 500).send({
-      status: "FAILED",
-      message: "Error al realizar la petición:",
-      data: { error: error?.message || error },
-    });
-  }
-};
-
-const getOneUser = async (req, res) => {
-  const {
-    params: { userId },
-  } = req;
-
-  if (!userId) {
-    return res.status(400).send({
-      status: "FAILED",
-      data: { error: "Parameter ':userId' can not be empty" },
-    });
-  }
-
-  try {
-    const user = await userService.getOneUser(userId);
-    if (!user) {
-      return res.status(404).send({
-        status: "FAILED",
-        data: { error: `Can't find user with the id '${userId}'` },
-      });
-    }
-
-    res.send({ status: "OK", data: user });
-  } catch (error) {
-    res.status(error?.status || 500).send({
-      status: "FAILED",
-      message: "Error al realizar la petición:",
-      data: { error: error?.message || error },
-    });
-  }
-};
-
-const getOneAcolit = async (req, res) => {
-  const {
-    params: { gmail },
-  } = req;
-
-  if (!gmail) {
-    return res.status(400).send({
-      status: "FAILED",
-      data: { error: "Parameter ':gmail' can not be empty" },
-    });
-  }
-
-  try {
-    const user = await userService.getOneAcolit(gmail);
-    if (!user) {
-      return res.status(404).send({
-        status: "FAILED",
-        data: { error: `Can't find user with the id '${gmail}'` },
-      });
-    }
-
-    res.send({ status: "OK", data: user });
   } catch (error) {
     res.status(error?.status || 500).send({
       status: "FAILED",
@@ -214,49 +136,46 @@ const updateOnCrypt = async (req, res) => {
   }
 };
 
-const deleteOneUser = async (req, res) => {
-  const {
-    params: { userId },
-  } = req;
+// const deleteOneUser = async (req, res) => {
+//   const {
+//     params: { userId },
+//   } = req;
 
-  if (!userId) {
-    return res.status(400).send({
-      status: "FAILED",
-      data: {
-        error: "Parameter ':userId' can not be empty",
-      },
-    });
-  }
+//   if (!userId) {
+//     return res.status(400).send({
+//       status: "FAILED",
+//       data: {
+//         error: "Parameter ':userId' can not be empty",
+//       },
+//     });
+//   }
 
-  try {
-    const deletedUser = await userService.deleteOneUser(userId);
+//   try {
+//     const deletedUser = await userService.deleteOneUser(userId);
 
-    if (!deletedUser) {
-      return res.status(404).send({
-        status: "FAILED",
-        data: {
-          error: `Can't find user with the id '${userId}'`,
-        },
-      });
-    }
+//     if (!deletedUser) {
+//       return res.status(404).send({
+//         status: "FAILED",
+//         data: {
+//           error: `Can't find user with the id '${userId}'`,
+//         },
+//       });
+//     }
 
-    res.status(200).send({ status: "OK", data: deletedUser });
-  } catch (error) {
-    res.status(error?.status || 500).send({
-      status: "FAILED",
-      message: "Error al realizar la petición:",
-      data: { error: error?.message || error },
-    });
-  }
-};
+//     res.status(200).send({ status: "OK", data: deletedUser });
+//   } catch (error) {
+//     res.status(error?.status || 500).send({
+//       status: "FAILED",
+//       message: "Error al realizar la petición:",
+//       data: { error: error?.message || error },
+//     });
+//   }
+// };
 
 module.exports = {
-  getAllUsers,
-  getOneUser,
+  getAcolitsUsers,
   loginUser,
   updateOneUser,
   updateOnCrypt,
-  deleteOneUser,
-  getAcolitsUsers,
-  getOneAcolit
+  // deleteOneUser,
 };
