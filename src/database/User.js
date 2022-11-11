@@ -1,36 +1,9 @@
 const User = require("../models/userModel");
 
-const getAllUsers = async () => {
-  try {
-    const users = await User.find();
-    return users;
-  } catch (error) {
-    throw error;
-  }
-};
-
 const getAcolitsUsers = async () => {
   try {
     const users = await User.find({ joshua: false });
     return users;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const getOneAcolit = async (gmail) => {
-  try {
-    const users = await User.findOne({ email: gmail });
-    return users;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const getOneUser = async (userId) => {
-  try {
-    const user = await User.findById(userId);
-    return user;
   } catch (error) {
     throw error;
   }
@@ -89,22 +62,19 @@ const updateOnCrypt = async (userEmail, changes) => {
   }
 };
 
-const deleteOneUser = async (userId) => {
-  try {
-    let deletedUser = await User.findByIdAndRemove(userId);
-    return deletedUser;
-  } catch (error) {
-    throw error;
-  }
-};
+// const deleteOneUser = async (userId) => {
+//   try {
+//     let deletedUser = await User.findByIdAndRemove(userId);
+//     return deletedUser;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 module.exports = {
-  getAllUsers,
-  getOneUser,
+  getAcolitsUsers,
   loginUser,
   updateOneUser,
   updateOnCrypt,
-  deleteOneUser,
-  getAcolitsUsers,
-  getOneAcolit
+  // deleteOneUser,
 };
