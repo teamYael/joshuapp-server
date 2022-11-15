@@ -14,6 +14,4 @@ router.patch("/users/:userEmail", userController.updateOneUser);
 
 router.patch("/acolitoncript/:userEmail", userController.updateOnCrypt);
 
-router.delete("/users/:userId", userController.deleteOneUser);
-
 module.exports = router;
