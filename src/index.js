@@ -8,6 +8,7 @@ const mongodbRoute = `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASS
 //Yael: `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@e4p1.zrnbvtk.mongodb.net/JoshuApp`
 
 const userRouter = require('./routes/userRoutes');
+const dollRouter = require('./routes/dollRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 app.use("/api", userRouter);
+app.use("/api", dollRouter);
 
 async function start() {
   try {
