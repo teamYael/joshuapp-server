@@ -1,12 +1,12 @@
+const { response } = require('express');
 const Doll = require('../models/dollModel');
 const DollPiece = require('../models/dollPieceModel');
 const arrayPieces = require('../outputs/createDoll');
 
 const getAllDolls = async () => {
     try {
-        const dolls = await Doll.find();
-        return dolls;
-        
+        const dolls = await Doll.find().populate('dollPieces');
+        return dolls[0];
     } catch (error) {
         throw error;
     }
@@ -22,7 +22,7 @@ const createNewDoll = async () => {
         const createdDoll = await dollToInsert.save();
         // console.log(createdDoll);
 
-        const ids = arrayPieces.arrayPieces.map(async item => {
+         arrayPieces.arrayPieces.map(async item => {
             
             const newDollPiece = {
                 name: item.name,
@@ -43,9 +43,10 @@ const createNewDoll = async () => {
         });
 
     } catch (error) {
-    console.log(error) 
+        console.log(error) 
     }
 };
+
 
 module.exports = {
     getAllDolls,
