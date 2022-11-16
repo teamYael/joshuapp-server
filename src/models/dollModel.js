@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const dollPieceModel = require('./dollPieceModel')
 
 const dollSchema = new Schema({
-location: String,
-isFound: Boolean,
-dollPart: String,
-photoPart: String
+    misionStatus: String,
+    dollPieces:[{type: Schema.ObjectId, ref: dollPieceModel}]
 })
 
 

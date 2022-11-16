@@ -1,4 +1,6 @@
 const dollService = require('../services/dollService');
+const Doll = require('../models/dollModel');
+const DollPieces = require('../models/dollPieceModel');
 
 const getAllDolls = async (req, res) => {
     try {
@@ -17,6 +19,23 @@ const getAllDolls = async (req, res) => {
     }
 };
 
+const createNewDoll = async (req,res) =>{
+
+    try {
+        const createdDoll = await dollService.createNewDoll();
+        res.status(201).send({status: "OK", data: createdDoll});
+    } catch (error) {
+        res
+            .status(error?.status || 500)
+            .send({
+                status: "FAILED",
+                message: "Error al realizar la petición:",
+                data: {error:error?.message || error} });
+    }
+};
+
+
 module.exports = {
-    getAllDolls
+    getAllDolls,
+    createNewDoll
 }
