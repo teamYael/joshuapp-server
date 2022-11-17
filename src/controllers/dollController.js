@@ -1,6 +1,5 @@
 const dollService = require('../services/dollService');
-const Doll = require('../models/dollModel');
-const DollPieces = require('../models/dollPieceModel');
+
 
 const getAllDolls = async (req, res) => {
     try {
@@ -34,8 +33,46 @@ const createNewDoll = async (req,res) =>{
     }
 };
 
+const updateDollPieces = async (req,res) => {
+    const {
+        body,
+        params: { dollPieceId },
+    } = req;
+
+    if(!dollPieceId) {
+        return res 
+            .status(400)
+            .send({
+                status: "FAILED",
+                data: {error: "Parameter 'dollPieceId' can't be empty"}
+            });
+    }
+    try {
+        const updatedDollPieces = await dollService.updateDollPieces(dollPieceId, body);
+
+        if(!updatedDollPieces){
+            return res
+                .status(404)
+                .send({
+                    status: "FAILED",
+                    data: {error : `Can´t find dollpiece with the id ${dollPieceId}`}
+                })
+        }
+
+        res.send({status: "Ok", data: updatedDollPieces});
+    } catch (error) {
+        res
+            .status(error?.status || 500)
+            .send({ status: "FAILED",
+                    message: "Error al realizar la petición",
+                    data: {error: error?.message || error } });
+        
+    }
+};
+
 
 module.exports = {
     getAllDolls,
-    createNewDoll
+    createNewDoll,
+    updateDollPieces
 }

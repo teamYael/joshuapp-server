@@ -47,8 +47,16 @@ const createNewDoll = async () => {
     }
 };
 
-
+const updateDollPieces= async(dollPieceId, changes) => {
+    try {
+        let updatedDollPieces = await DollPiece.findByIdAndUpdate(dollPieceId, {$set:changes}, {new:true});
+        return updatedDollPieces;
+    } catch (error) {
+        throw error;
+    }
+}
 module.exports = {
     getAllDolls,
-    createNewDoll
+    createNewDoll,
+    updateDollPieces
 }

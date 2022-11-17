@@ -1,4 +1,5 @@
 const Doll = require('../database/Doll');
+const DollPiece= require('../database/Doll');
 
 const getAllDolls = async () => {
     try {
@@ -19,7 +20,17 @@ const createNewDoll = async () => {
     }
 };
 
+const updateDollPieces = async (dollPieceId, changes) => {
+    try {
+        const updatedDollPieces = DollPiece.updateDollPieces(dollPieceId, changes);
+        return updatedDollPieces;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     getAllDolls,
-    createNewDoll
+    createNewDoll,
+    updateDollPieces
 }
