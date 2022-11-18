@@ -47,6 +47,16 @@ const createNewDoll = async () => {
     }
 };
 
+const updateDoll = async(dollId, changes) => {
+    try {
+        let updatedDoll = await Doll.findByIdAndUpdate(dollId, {$set:changes}, {new:true})
+        return updatedDoll;
+    } catch (error) {
+        throw error;
+    }
+
+}
+
 const updateDollPieces= async(dollPieceId, changes) => {
     try {
         let updatedDollPieces = await DollPiece.findByIdAndUpdate(dollPieceId, {$set:changes}, {new:true});
@@ -69,6 +79,7 @@ try {
 module.exports = {
     getAllDolls,
     createNewDoll,
+    updateDoll,
     updateDollPieces,
     deleteDoll
 }

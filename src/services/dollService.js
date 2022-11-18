@@ -19,7 +19,14 @@ const createNewDoll = async () => {
         throw error;
     }
 };
-
+const updateDoll = async(dollId, changes) => {
+    try {
+        const updatedDoll = Doll.updateDoll(dollId,changes);
+        return updatedDoll;
+    } catch (error) {
+        throw error;
+    }
+}
 const updateDollPieces = async (dollPieceId, changes) => {
     try {
         const updatedDollPieces = DollPiece.updateDollPieces(dollPieceId, changes);
@@ -40,6 +47,7 @@ const deleteDoll= async () => {
 module.exports = {
     getAllDolls,
     createNewDoll,
+    updateDoll,
     updateDollPieces,
     deleteDoll
 }
