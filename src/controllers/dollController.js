@@ -60,6 +60,7 @@ const updateDoll = async (req,res) => {
         }
 
         res.send({status: "Ok", data: updatedDoll});
+        
     } catch (error) {
         res
             .status(error?.status || 500)
