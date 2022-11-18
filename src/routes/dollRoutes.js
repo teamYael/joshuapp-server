@@ -5,7 +5,8 @@ const dollController = require("../controllers/dollController");
 
 router.get("/dolls", dollController.getAllDolls);
 router.post("/pieces", dollController.createNewDoll);
- router.patch("/dollPieces/:dollPieceId", dollController.updateDollPieces);
+router.patch("/dollPieces/:dollPieceId", dollController.updateDollPieces);
+router.delete("/doll/:dollId", dollController.deleteDoll);
 
 
 module.exports = router;

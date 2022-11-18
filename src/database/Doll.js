@@ -55,8 +55,20 @@ const updateDollPieces= async(dollPieceId, changes) => {
         throw error;
     }
 }
+
+const deleteDoll = async() =>{
+try {
+    let deletedDoll= await Doll.deleteMany({}) 
+    let deletedDollPieces = await DollPiece.deleteMany({})
+    return deletedDoll, deletedDollPieces;
+} catch (error) {
+    throw error;
+}
+}
+
 module.exports = {
     getAllDolls,
     createNewDoll,
-    updateDollPieces
+    updateDollPieces,
+    deleteDoll
 }
