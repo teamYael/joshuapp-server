@@ -1,19 +1,19 @@
  const arrayPieces = [
     {
         name:'leg',
-        photo:"require('../../../assets/leg.jpg')"
+        photo:"https://i.ibb.co/dGTxWjv/leg.jpg"
     },
     {
         name:'arm',
-        photo:"require('../../../assets/arm.jpg')"
+        photo:"https://i.ibb.co/M96Nwh4/arm.jpg"
     },
     {
         name:'head',
-        photo:"require('../../../assets/head.jpg')"
+        photo:"https://i.ibb.co/b5wp06s/head.jpg"
     },
     {
         name:'body',
-        photo:"require('../../../assets/body.jpg')"
+        photo:"https://i.ibb.co/WpS9zHB/body.jpg"
     },
 ];
 
