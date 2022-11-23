@@ -4,7 +4,7 @@ const dollService = require('../services/dollService');
 const getAllDolls = async (req, res) => {
     try {
         const allDolls = await dollService.getAllDolls();
-        if(allDolls.length === 0){
+        if(allDolls === undefined){
             return res.status(404).send({message: 'No existen muñecas'});
         }
         res.send({ status: "OK", data: allDolls });
