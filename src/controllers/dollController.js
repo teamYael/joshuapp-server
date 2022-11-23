@@ -5,7 +5,7 @@ const getAllDolls = async (req, res) => {
     try {
         const allDolls = await dollService.getAllDolls();
         if(allDolls === undefined){
-            return res.status(404).send({message: 'No existen muñecas'});
+            return res.send({message: 'No existen muñecas'});
         }
         res.send({ status: "OK", data: allDolls });
         
