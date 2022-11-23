@@ -6,6 +6,9 @@ const arrayPieces = require('../outputs/createDoll');
 const getAllDolls = async () => {
     try {
         const dolls = await Doll.find().populate('dollPieces');
+        if (dolls[0] === undefined) {
+            return null;
+        }
         return dolls[0];
     } catch (error) {
         throw error;
