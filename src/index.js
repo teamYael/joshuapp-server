@@ -35,13 +35,12 @@ app.use(function(req, res, next) {
 app.use("/api", userRouter);
 app.use("/api", dollRouter);
 
-app.get('/', (req, res) => {
-  res.send('Welcome to Absentia Staging Socket Service from CI')
-})
-
 async function start() {
   try {
     await mongoose.connect(mongodbRoute);
+    app.get('/', (req, res) => {
+      res.send('Welcome to Absentia Staging Socket Service from CI')
+    })
     server.listen(PORT, () => {
       console.log(`API is listening on port ${PORT}`);
     });
