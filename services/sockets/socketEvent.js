@@ -3,6 +3,10 @@ events = (socket) => {
     console.log({ Clientsocket: socket.id });
     socket.emit("new_user", socket.id);
   
+    socket.on('slider', (data) => {
+      console.log(data);
+      socket.broadcast.emit('slider', data);
+    });
     // TEST BROADCAST
     socket.on('test_broadcast', async (data) => {
       try {
