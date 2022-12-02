@@ -1,4 +1,5 @@
 const userService = require("../../src/services/userService");
+const cron = require('node-cron');
 
 events = (socket) => {
   
@@ -17,6 +18,11 @@ events = (socket) => {
         socket.emit('update_acolyte_valuesError', error);
       }
     });
+
+    //Node cron to update concentration and endurance
+    const nodeCron = cron.schedule("*/2 * * * * *", () => {
+      console.log("running a task every 2 second");
+    });
   
     socket.on('disconnect', () => {
       console.log('Client disconnected: ', socket.id);      
@@ -25,3 +31,4 @@ events = (socket) => {
 }
   
 exports.socketEvents = events;
+exports.nodeCron = this.nodeCron;
