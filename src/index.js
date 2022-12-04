@@ -4,7 +4,6 @@ const http = require('http');
 const socketIO = require('socket.io');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const nodeCron = require('../services/sockets/socketEvent').nodeCron;
 const mongodbRoute = `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@e4p1.gye2wcf.mongodb.net/JoshuApp`;
 //Josu `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@e4p1.gye2wcf.mongodb.net/JoshuApp'
 //Unai: 'mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@cluster0.j8erkam.mongodb.net/JoshuApp'
@@ -46,7 +45,6 @@ async function start() {
       console.log(`API is listening on port ${PORT}`);
     });
     console.log(`Conexión con Mongo correcta.`);
-    nodeCron();
   } catch (error) {
     console.log(process.env)
     console.log(`Error al conectar a la base de datos: ${error.message}`);
