@@ -18,7 +18,7 @@ const getAcolitsUsers = async (req, res) => {
 
 // Function to insert user by token
 const loginUser = async (req, res) => {
-  console.log("LOGIN USER")
+  console.log("LOGIN USER");
   const { body } = req;
 
   if (!body.token || !body.claims.name || !body.claims.email) {
@@ -34,16 +34,23 @@ const loginUser = async (req, res) => {
   const newUser = {
     token: body.token,
     name: body.claims.name,
-    email: body.claims.email, 
-    joshua: (body.claims.email === process.env.ROL_JOSHUA) ? true : 
-            (body.claims.email === process.env.ROL_MORTIMER) ? true : 
-            false,
-            
+    email: body.claims.email,
+    joshua:
+      body.claims.email === process.env.ROL_JOSHUA
+        ? true
+        : body.claims.email === process.env.ROL_MORTIMER
+        ? true
+        : false,
+
     active: false,
     avatar: body.claims.picture,
     life: 100,
     money: 29,
+    concentration: 100,
+    endurance: 100,
     onCrypt: false,
+    idSocket: null,
+    userState:"awake"
   };
 
   try {
@@ -59,45 +66,43 @@ const loginUser = async (req, res) => {
 };
 
 const updateOneUser = async (req, res) => {
-    const {
-        body,
-        params: { userEmail }
-    } = req;
+  const {
+    body,
+    params: { userEmail },
+  } = req;
 
-    if (!userEmail) {
-        return res
-            .status(400)
-            .send({
-                status: "FAILED",
-                data: {
-                    error: "Parameter ':userEmail' can not be empty"
-                }
-            });
+  if (!userEmail) {
+    return res.status(400).send({
+      status: "FAILED",
+      data: {
+        error: "Parameter ':userEmail' can not be empty",
+      },
+    });
+  }
+
+  try {
+    const updatedUser = await userService.updateOneUser(userEmail, body);
+
+    if (!updatedUser) {
+      return res.status(404).send({
+        status: "FAILED",
+        data: {
+          error: `Can't find user with the id '${userEmail}'`,
+        },
+      });
     }
 
-    try {
-        const updatedUser = await userService.updateOneUser(userEmail, body);
-
-        if (!updatedUser) {
-            return res
-            .status(404)
-            .send({
-                status: "FAILED",
-                data: {
-                    error: `Can't find user with the id '${userEmail}'`
-                }
-            });
-        }
-
-        res.send({ status: "OK", data: updatedUser });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED",
-                message: "Error al realizar la petición:",
-                data: { error: error?.message || error } })
-    }
-}
+    res.send({ status: "OK", data: updatedUser });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({
+        status: "FAILED",
+        message: "Error al realizar la petición:",
+        data: { error: error?.message || error },
+      });
+  }
+};
 
 const updateOnCrypt = async (req, res) => {
   const {
