@@ -19,7 +19,7 @@ events = (socket) => {
       }
     });
 
-    cron.schedule("0 */1 * * * *", async () => {
+    cron.schedule("0 0 */1 * * *", async () => {
       try {
         const allUsers = await userService.getAcolitsUsers();
         allUsers.map(async user => {
