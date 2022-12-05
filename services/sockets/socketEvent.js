@@ -4,7 +4,51 @@ const cron = require('node-cron');
 events = (socket) => {
   
     console.log({ Clientsocket: socket.id });
-    socket.emit("new_user", socket.id);
+
+    //Create new user
+    socket.on('new_user', async data => {
+      try {
+        const newUser = {
+          token: data.token,
+          name: data.claims.name,
+          email: data.claims.email,
+          joshua:
+            data.claims.email === process.env.ROL_JOSHUA
+            ? true
+            : data.claims.email === process.env.ROL_MORTIMER
+            ? true
+            : false,
+          active: false,
+          avatar: data.claims.picture,
+          life: 100,
+          money: 29,
+          concentration: 100,
+          endurance: 100,
+          onCrypt: false,
+          idSocket: socket.id,
+          userState:"awake"
+        };
+
+        const createdUser = await userService.loginUser(newUser);
+        socket.broadcast.emit('new_user', createdUser);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+    //Update idSocket
+    socket.on('update_idsocket', async data => {
+      try {
+        data.body = {
+          "idSocket": socket.id
+        };
+        console.log(data.body);
+        const updatedUser = await userService.updateOneUser(data.email, data.body);
+        socket.broadcast.emit('update_idsocket', updatedUser);
+      } catch (error) {
+        console.log(error);
+      }
+    })
 
     //Update acolyte values
     socket.on('update_acolyte_values', async data => {
