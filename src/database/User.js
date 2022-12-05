@@ -62,6 +62,43 @@ const updateOnCrypt = async (userEmail, changes) => {
   }
 };
 
+const updateAcolytesEndurance = async () => {
+  try {
+    const restEnduranceAcolytes = await User.updateMany(
+      {joshua: false,
+      userState: "awake"}, 
+      {$inc: {endurance: -10, concentration: -10}},
+      {new: true}
+    );
+    
+    const sumEnduranceAcolytes = await User.updateMany(
+      {joshua: false,
+      userState: "sleeping"}, 
+      {$inc: {endurance: +10, concentration: +10}},
+      {new: true}
+    );
+
+    const acolytes = await User.find({ joshua: false });
+    return acolytes;
+  } catch (error) {
+    throw error;
+  }
+}
+
+const updateAcolytesState = async () => {
+  try {
+    const newAcolytesState = await User.updateMany(
+      {endurance: { $lt: 15 }},
+      {$set: {userState: "unconscious"}},
+      {new: true}
+    );
+
+    const acolytes = await User.find({ joshua: false });
+    return acolytes;
+  } catch (error) {
+    throw error;
+  }
+}
 // const deleteOneUser = async (userId) => {
 //   try {
 //     let deletedUser = await User.findByIdAndRemove(userId);
@@ -76,5 +113,7 @@ module.exports = {
   loginUser,
   updateOneUser,
   updateOnCrypt,
+  updateAcolytesEndurance,
+  updateAcolytesState,
   // deleteOneUser,
 };

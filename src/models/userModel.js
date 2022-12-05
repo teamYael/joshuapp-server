@@ -11,8 +11,8 @@ const userSchema = new Schema({
   life: Number,
   money: Number,
   onCrypt: Boolean,
-  concentration: Number,
-  endurance: Number,
+  concentration: { type: Number, min: 0, max: 100},
+  endurance: { type: Number, min: 0, max: 100 },
   idSocket: String,
   userState: String,
 });
