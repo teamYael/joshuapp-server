@@ -38,8 +38,7 @@ const updateOnCrypt = async (userEmail, changes) => {
 
 const updateAcolytesEndurance = async () => {
     try {
-        const updatedAcolytes = User.updateAcolytesEndurance();
-        return updatedAcolytes;
+        User.updateAcolytesEndurance();
     } catch (error) {
         throw error;
     }
@@ -54,21 +53,11 @@ const updateAcolytesState = async () => {
     }
 }
 
-// const deleteOneUser = async userId => {
-//     try {
-//         let deletedUser = User.deleteOneUser(userId);
-//         return deletedUser;
-//     } catch (error) {
-//         throw error;
-//     }
-// }
-
 module.exports = {
     getAcolitsUsers,
     loginUser,
     updateOneUser,
     updateOnCrypt,
     updateAcolytesEndurance,
-    updateAcolytesState,
-    // deleteOneUser,
+    updateAcolytesState
 }
