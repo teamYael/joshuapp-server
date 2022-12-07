@@ -36,9 +36,9 @@ const updateOnCrypt = async (userEmail, changes) => {
     }
 }
 
-const updateAcolytesEndurance = async () => {
+const updateAcolytesEnduranceAndConcentration = async () => {
     try {
-        User.updateAcolytesEndurance();
+        const updatedAcolytes = User.updateAcolytesEnduranceAndConcentration();
     } catch (error) {
         throw error;
     }
@@ -58,6 +58,6 @@ module.exports = {
     loginUser,
     updateOneUser,
     updateOnCrypt,
-    updateAcolytesEndurance,
+    updateAcolytesEnduranceAndConcentration,
     updateAcolytesState
 }

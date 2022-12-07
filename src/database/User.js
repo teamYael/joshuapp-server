@@ -62,16 +62,35 @@ const updateOnCrypt = async (userEmail, changes) => {
   }
 };
 
-const updateAcolytesEndurance = async () => {
+const updateAcolytesEnduranceAndConcentration = async () => {
   try {
-    await User.updateMany(
+    // const updateAcolit = await User.updateMany(
+    //   { isJoshua: { $eq: false }, acolitStatus: { $eq: "awake" }, resistance: {$gt: 10} },
+    //   { $inc: { resistance: - 10, concentration: - 10 } },
+    //   { multi: true }
+    // )
+    //   .then(() => {
+    //     return User.updateMany(
+    //       { isJoshua: { $eq: false }, acolitStatus: { $eq: "sleeping" }, resistance: {$lt: 100} },
+    //       { $inc: { resistance: 10, concentration: 10, } },
+    //       { multi: true }
+    //     );
+    //   })
+    //     .then(() => {
+    //       // todos los acólitos han sido actualizados
+    //     })
+    //   .catch((error) => {
+    //     // ocurrió un error durante la actualización de los acólitos
+    //   })
+
+    const awakeAcolytes = await User.updateMany(
       {joshua: false,
       userState: "awake"}, 
       {$inc: {endurance: -10, concentration: -10}},
       {new: true}
     );
     
-    await User.updateMany(
+    const sleepAcolytes = await User.updateMany(
       {joshua: false,
       userState: "sleeping"}, 
       {$inc: {endurance: +10, concentration: +10}},
@@ -99,6 +118,6 @@ module.exports = {
   loginUser,
   updateOneUser,
   updateOnCrypt,
-  updateAcolytesEndurance,
+  updateAcolytesEnduranceAndConcentration,
   updateAcolytesState
 };
