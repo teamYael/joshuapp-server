@@ -45,7 +45,6 @@ async function start() {
       console.log(`API is listening on port ${PORT}`);
     });
     console.log(`Conexión con Mongo correcta.`);
-    // enduranceNodeCron();
   } catch (error) {
     console.log(process.env)
     console.log(`Error al conectar a la base de datos: ${error.message}`);
@@ -55,3 +54,6 @@ async function start() {
 start();
 
 require('../services/sockets/socketMain');
+const { enduranceNodeCron } = require('../services/node-cron/endurance');
+// Function to initialize node-cron
+enduranceNodeCron();
