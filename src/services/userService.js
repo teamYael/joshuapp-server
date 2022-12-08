@@ -38,7 +38,7 @@ const updateOnCrypt = async (userEmail, changes) => {
 
 const updateAcolytesEnduranceAndConcentration = async () => {
     try {
-        const updatedAcolytes = User.updateAcolytesEnduranceAndConcentration();
+        const updatedAcolytes = await User.updateAcolytesEnduranceAndConcentration();
     } catch (error) {
         throw error;
     }
@@ -46,7 +46,7 @@ const updateAcolytesEnduranceAndConcentration = async () => {
 
 const updateAcolytesState = async () => {
     try {
-        const updatedAcolytes = User.updateAcolytesState();
+        const updatedAcolytes = await User.updateAcolytesState();
     } catch (error) {
         throw error;
     }

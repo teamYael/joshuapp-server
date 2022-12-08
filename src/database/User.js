@@ -85,7 +85,7 @@ const updateAcolytesEnduranceAndConcentration = async () => {
 const updateAcolytesState = async () => {
   try {
     const updatedAcolytes = await User.updateMany(
-      {endurance: { $lt: 15 }},
+      { userState: { $eq: "awake" }, endurance: { $lt: 15 }},
       {$set: {userState: "unconscious"}},
       {new: true}
     );
