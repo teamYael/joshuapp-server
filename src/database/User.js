@@ -64,38 +64,19 @@ const updateOnCrypt = async (userEmail, changes) => {
 
 const updateAcolytesEnduranceAndConcentration = async () => {
   try {
-    // const updateAcolit = await User.updateMany(
-    //   { isJoshua: { $eq: false }, acolitStatus: { $eq: "awake" }, resistance: {$gt: 10} },
-    //   { $inc: { resistance: - 10, concentration: - 10 } },
-    //   { multi: true }
-    // )
-    //   .then(() => {
-    //     return User.updateMany(
-    //       { isJoshua: { $eq: false }, acolitStatus: { $eq: "sleeping" }, resistance: {$lt: 100} },
-    //       { $inc: { resistance: 10, concentration: 10, } },
-    //       { multi: true }
-    //     );
-    //   })
-    //     .then(() => {
-    //       // todos los acólitos han sido actualizados
-    //     })
-    //   .catch((error) => {
-    //     // ocurrió un error durante la actualización de los acólitos
-    //   })
-
-    const awakeAcolytes = await User.updateMany(
-      {joshua: false,
-      userState: "awake"}, 
-      {$inc: {endurance: -10, concentration: -10}},
-      {new: true}
-    );
-    
-    const sleepAcolytes = await User.updateMany(
-      {joshua: false,
-      userState: "sleeping"}, 
-      {$inc: {endurance: +10, concentration: +10}},
-      {new: true}
-    );
+    const updatedAcolytes = await User.updateMany(
+      { joshua: { $eq: false }, userState: { $eq: "awake" }, endurance: {$gt: 10} },
+      { $inc: { endurance: - 10, concentration: - 10 } },
+    )
+      .then(() => {
+        return User.updateMany(
+          { joshua: { $eq: false }, userState: { $eq: "sleeping" }, endurance: {$lt: 100} },
+          { $inc: { endurance: 10, concentration: 10, } },
+        );
+      })
+      .catch((error) => {
+        throw error;
+      })
   } catch (error) {
     throw error;
   }
@@ -103,7 +84,7 @@ const updateAcolytesEnduranceAndConcentration = async () => {
 
 const updateAcolytesState = async () => {
   try {
-    await User.updateMany(
+    const updatedAcolytes = await User.updateMany(
       {endurance: { $lt: 15 }},
       {$set: {userState: "unconscious"}},
       {new: true}

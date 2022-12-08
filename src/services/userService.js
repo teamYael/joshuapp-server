@@ -47,7 +47,6 @@ const updateAcolytesEnduranceAndConcentration = async () => {
 const updateAcolytesState = async () => {
     try {
         const updatedAcolytes = User.updateAcolytesState();
-        return updatedAcolytes;
     } catch (error) {
         throw error;
     }
