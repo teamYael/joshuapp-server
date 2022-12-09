@@ -1,4 +1,67 @@
 const userService = require("../services/userService");
+const dollService = require("../services/dollService");
+
+const getAcolyteAndDoll = async (req, res) => {
+  const { params: { userEmail } } = req;
+
+  if (!userEmail) {
+    return res
+      .status(400)
+      .send({
+        status: "FAILED",
+        data: { error: "Parameter ':userEmail' can not be empty" }
+      });
+  }
+
+  try {
+    const resObj = {};
+
+    const user = await userService.getOneUser(userEmail);
+    if (!user) {
+      return res
+        .status(404)
+        .send({
+          status: "FAILED",
+          data: { error: `Can't find user with the email '${userEmail}'` }
+        });
+    }
+    resObj.acolyte = user;
+
+    const allDolls = await dollService.getAllDolls();
+    resObj.doll = allDolls;
+    
+    res.send({ status: "OK", data: resObj });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({
+        status: "FAILED",
+        message: "Error al realizar la petición",
+        data: { error: error?.message || error }
+      });
+  }
+}
+
+const getAcolytesAndDoll = async (req, res) => {
+  try {
+    const resObj = {};
+
+    const acolytes = await userService.getAcolitsUsers();
+    resObj.acolytes = acolytes;
+    const allDolls = await dollService.getAllDolls();
+    resObj.doll = allDolls;
+
+    res.send({ status: "OK", data: resObj });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({
+        status: "FAILED",
+        message: "Error al realizar la petición",
+        data: { error: error?.message || error }
+      });
+  }
+}
 
 const getAcolitsUsers = async (req, res) => {
   try {
@@ -178,6 +241,8 @@ const updateOnCrypt = async (req, res) => {
 // };
 
 module.exports = {
+  getAcolyteAndDoll,
+  getAcolytesAndDoll,
   getAcolitsUsers,
   loginUser,
   updateOneUser,

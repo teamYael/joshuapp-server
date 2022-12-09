@@ -6,12 +6,11 @@ const { verifyEmail } = require('../middleware/verifyEmail');
 
 const userController = require('../controllers/userController');
 
+router.get("/acolyte/:userEmail", userController.getAcolyteAndDoll);
+router.get("/joshua", userController.getAcolytesAndDoll);
 router.get("/acolits", userController.getAcolitsUsers);
-
 router.post("/token", verifyToken, verifyEmail, userController.loginUser);
-
 router.patch("/users/:userEmail", userController.updateOneUser);
-
 router.patch("/acolitoncript/:userEmail", userController.updateOnCrypt);
 
 // router.delete("/users/:userId", userController.deleteOneUser);

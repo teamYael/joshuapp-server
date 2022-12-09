@@ -9,6 +9,15 @@ const getAcolitsUsers = async () => {
     }
 }
 
+const getOneUser = async userEmail => {
+    try {
+        const user = await User.getOneUser(userEmail);
+        return user;
+    } catch (error) {
+        throw error;
+    }
+};
+
 const loginUser = async newUser => {
     try {
         const createdUser = User.loginUser(newUser);
@@ -54,6 +63,7 @@ const updateAcolytesState = async () => {
 
 module.exports = {
     getAcolitsUsers,
+    getOneUser,
     loginUser,
     updateOneUser,
     updateOnCrypt,
