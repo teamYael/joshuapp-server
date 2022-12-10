@@ -1,13 +1,13 @@
-name: Production Deploy
+name: Staging Deploy
 on:
   push:
     branches:
-      - main
+      - staging
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 jobs:
   deploy:
-      name: Production Server
+      name: Staging Server
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v3
