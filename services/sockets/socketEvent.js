@@ -29,7 +29,7 @@ events = (socket) => {
         };
 
         const createdUser = await userService.loginUser(newUser);
-        socket.broadcast.emit('new_user', createdUser);
+        socket.emit('new_user', createdUser);
       } catch (error) {
         console.log(error);
       }
@@ -43,7 +43,7 @@ events = (socket) => {
         };
         console.log(data.body);
         const updatedUser = await userService.updateOneUser(data.email, data.body);
-        socket.broadcast.emit('update_idsocket', updatedUser);
+        socket.emit('update_idsocket', updatedUser);
       } catch (error) {
         console.log(error);
       }
@@ -55,7 +55,7 @@ events = (socket) => {
         console.log(`EMAIL: ${data.email}`)
         const updatedUser = await userService.updateOneUser(data.email, data.body);
         console.log(`UPDATED: ${updatedUser}`)
-        socket.broadcast.emit('update_acolyte_values', updatedUser);
+        socket.emit('update_acolyte_values', updatedUser);
       } catch (error) {
         console.log(error);
         socket.emit('update_acolyte_valuesError', error);
