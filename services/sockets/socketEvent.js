@@ -1,4 +1,6 @@
 const userService = require("../../src/services/userService");
+const server = require('../../src/index');
+const io = server.socketIO;
 
 events = (socket) => {
   
@@ -55,7 +57,7 @@ events = (socket) => {
         console.log(`EMAIL: ${data.email}`)
         const updatedUser = await userService.updateOneUser(data.email, data.body);
         console.log(`UPDATED: ${updatedUser}`)
-        socket.emit('update_acolyte_values', updatedUser);
+        io.emit('update_acolyte_values', updatedUser);
       } catch (error) {
         console.log(error);
         socket.emit('update_acolyte_valuesError', error);
