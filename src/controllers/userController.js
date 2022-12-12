@@ -1,7 +1,7 @@
 const userService = require("../services/userService");
 const dollService = require("../services/dollService");
 
-const getAcolyteAndDoll = async (req, res) => {
+const getInitialData = async (req, res) => {
   const { params: { userEmail } } = req;
 
   if (!userEmail) {
@@ -16,8 +16,8 @@ const getAcolyteAndDoll = async (req, res) => {
   try {
     const resObj = {};
 
-    const user = await userService.getOneUser(userEmail);
-    if (!user) {
+    const currentUser = await userService.getOneUser(userEmail);
+    if (!currentUser) {
       return res
         .status(404)
         .send({
@@ -25,32 +25,18 @@ const getAcolyteAndDoll = async (req, res) => {
           data: { error: `Can't find user with the email '${userEmail}'` }
         });
     }
-    resObj.acolyte = user;
 
     const allDolls = await dollService.getAllDolls();
     resObj.doll = allDolls;
-    
-    res.send({ status: "OK", data: resObj });
-  } catch (error) {
-    res
-      .status(error?.status || 500)
-      .send({
-        status: "FAILED",
-        message: "Error al realizar la petición",
-        data: { error: error?.message || error }
-      });
-  }
-}
 
-const getAcolytesAndDoll = async (req, res) => {
-  try {
-    const resObj = {};
+    if (currentUser.joshua) {
+      const acolytes = await userService.getAcolitsUsers();
+      resObj.acolytes = acolytes;
 
-    const acolytes = await userService.getAcolitsUsers();
-    resObj.acolytes = acolytes;
-    const allDolls = await dollService.getAllDolls();
-    resObj.doll = allDolls;
+      return res.send({ status: "OK", data: resObj });
+    }
 
+    resObj.acolyte = currentUser;
     res.send({ status: "OK", data: resObj });
   } catch (error) {
     res
@@ -241,8 +227,7 @@ const updateOnCrypt = async (req, res) => {
 // };
 
 module.exports = {
-  getAcolyteAndDoll,
-  getAcolytesAndDoll,
+  getInitialData,
   getAcolitsUsers,
   loginUser,
   updateOneUser,
