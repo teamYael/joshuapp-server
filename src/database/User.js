@@ -95,7 +95,7 @@ const updateAcolytesState = async () => {
   try {
     const updatedAcolytes = await User.updateMany(
       { userState: { $eq: "awake" }, endurance: { $lt: 15 }},
-      {$set: {userState: "unconscious"}},
+      {$set: {userState: "unconscious", concentration: 10}},
       {new: true}
     );
   } catch (error) {
