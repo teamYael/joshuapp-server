@@ -89,6 +89,8 @@ const loginUser = async (req, res) => {
         ? true
         : body.claims.email === process.env.ROL_MORTIMER
         ? true
+        : body.claims.email === process.env.ROL_JOSHUA_GROUP
+        ? true
         : false,
 
     active: false,
