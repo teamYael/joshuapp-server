@@ -51,7 +51,7 @@ events = (socket) => {
         resObj.data.acolyte = createdUser;
       }
       
-      io.emit("new_user", resObj);
+      socket.emit("new_user", resObj);
     } catch (error) {
       console.log(error);
     }
