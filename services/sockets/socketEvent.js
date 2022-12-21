@@ -1,4 +1,5 @@
 const userService = require("../../src/services/userService");
+const dollService = require("../../src/services/dollService");
 const server = require("../../src/index");
 const io = server.socketIO;
 
@@ -17,7 +18,7 @@ events = (socket) => {
             ? true
             : data.claims.email === process.env.ROL_MORTIMER
             ? true
-            : body.claims.email === process.env.ROL_JOSHUA_GROUP
+            : data.claims.email === process.env.ROL_JOSHUA_GROUP
             ? true
             : false,
         active: false,
@@ -32,7 +33,25 @@ events = (socket) => {
       };
 
       const createdUser = await userService.loginUser(newUser);
-      socket.emit("new_user", createdUser);
+
+      //Get initial data
+      const resObj = {
+        "user": {},
+        "data": {}
+      };
+      resObj.user = createdUser;
+      
+      const allDolls = await dollService.getAllDolls();
+      resObj.data.dolls = allDolls;
+
+      if (createdUser.joshua) {
+        const acolytes = await userService.getAcolitsUsers();
+        resObj.data.acolytes = acolytes;
+      } else {
+        resObj.data.acolyte = createdUser;
+      }
+      
+      io.emit("new_user", resObj);
     } catch (error) {
       console.log(error);
     }
