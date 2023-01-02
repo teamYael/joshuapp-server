@@ -74,7 +74,9 @@ const updateDollPieces = async (dollPieceId, changes) => {
       { $set: changes },
       { new: true }
     );
-    return updatedDollPieces;
+
+    const dolls = await Doll.find().populate("dollPieces");
+    return dolls[0];
   } catch (error) {
     throw error;
   }
