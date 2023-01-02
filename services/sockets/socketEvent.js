@@ -6,7 +6,7 @@ const io = server.socketIO;
 events = (socket) => {
   console.log({ Clientsocket: socket.id });
 
-  //Create new user
+  // Create new user
   socket.on("new_user", async (data) => {
     try {
       const newUser = {
@@ -34,15 +34,15 @@ events = (socket) => {
 
       const createdUser = await userService.loginUser(newUser);
 
-      //Get initial data
+      // Get initial data
       const resObj = {
-        "user": {},
-        "data": {}
+        user: {},
+        data: {},
       };
       resObj.user = createdUser;
-      
+
       const allDolls = await dollService.getAllDolls();
-      resObj.data.dolls = allDolls;
+      resObj.data.doll = allDolls;
 
       if (createdUser.joshua) {
         const acolytes = await userService.getAcolitsUsers();
@@ -50,14 +50,14 @@ events = (socket) => {
       } else {
         resObj.data.acolyte = createdUser;
       }
-      
+
       socket.emit("new_user", resObj);
     } catch (error) {
       console.log(error);
     }
   });
 
-  //Update idSocket
+  // Update idSocket
   socket.on("update_idsocket", async (data) => {
     try {
       data.body = {
@@ -74,7 +74,7 @@ events = (socket) => {
     }
   });
 
-  //Update acolyte values
+  // Update acolyte values
   socket.on("update_acolyte_values", async (data) => {
     try {
       console.log(`EMAIL: ${data.email}`);
@@ -87,6 +87,49 @@ events = (socket) => {
     } catch (error) {
       console.log(error);
       socket.emit("update_acolyte_valuesError", error);
+    }
+  });
+
+  // Create new doll
+  socket.on("create_new_doll", async () => {
+    try {
+      const createdDoll = await dollService.createNewDoll();
+      io.emit("create_new_doll", createdDoll);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  // Update doll
+  socket.on("update_doll", async (data) => {
+    try {
+      const updatedDoll = await dollService.updateDoll(data.id, data.body);
+      io.emit("update_doll", updatedDoll);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  // Update dollpiece
+  socket.on("update_dollpiece", async (data) => {
+    try {
+      const updatedDollPiece = await dollService.updateDollPieces(
+        data.id,
+        data.body
+      );
+      io.emit("update_dollpiece", updatedDollPiece);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  // Delete doll
+  socket.on("delete_doll", async (data) => {
+    try {
+      const deletedDoll = await dollService.deleteDoll();
+      io.emit("delete_doll", deletedDoll);
+    } catch (error) {
+      console.log(error);
     }
   });
 
