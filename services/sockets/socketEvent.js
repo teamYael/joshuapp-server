@@ -2,12 +2,28 @@ const userService = require("../../src/services/userService");
 const dollService = require("../../src/services/dollService");
 const server = require("../../src/index");
 const io = server.socketIO;
+const { verifyToken } = require("../../src/middleware/verifyToken");
+const { verifyEmail } = require("../../src/middleware/verifyEmail");
 
 events = (socket) => {
   console.log({ Clientsocket: socket.id });
 
   // Create new user
   socket.on("new_user", async (data) => {
+    const validToken = await verifyToken(data.token);
+    console.log(`VALID TOKEN: ${validToken}`);
+
+    if (!validToken) {
+      return socket.emit("new_user_error", "Invalid token");
+    }
+
+    const validEmail = await verifyEmail(data.claims.email);
+    console.log(`VALID EMAIL: ${validEmail}`);
+
+    if (!validEmail) {
+      return socket.emit("new_user_error", "Invalid email");
+    }
+
     try {
       const newUser = {
         token: data.token,
