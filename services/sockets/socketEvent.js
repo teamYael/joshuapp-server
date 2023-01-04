@@ -64,7 +64,11 @@ events = (socket) => {
         userState: "awake",
       };
 
-      const createdUser = await userService.loginUser(newUser);
+      const changes = {
+        active: true,
+        idSocket: socket.id,
+      };
+      const createdUser = await userService.loginUser(newUser, changes);
 
       // Get initial data
       const resObj = {

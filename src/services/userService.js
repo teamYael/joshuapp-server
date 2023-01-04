@@ -18,9 +18,9 @@ const getOneUser = async (userEmail) => {
   }
 };
 
-const loginUser = async (newUser) => {
+const loginUser = async (newUser, changes) => {
   try {
-    const createdUser = User.loginUser(newUser);
+    const createdUser = User.loginUser(newUser, changes);
     return createdUser;
   } catch (error) {
     throw error;
