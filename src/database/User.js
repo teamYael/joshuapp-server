@@ -18,7 +18,7 @@ const getOneUser = async (userEmail) => {
   }
 };
 
-const loginUser = async (newUser) => {
+const loginUser = async (newUser, changes) => {
   try {
     const user = await User.findOne({ email: newUser.email });
     if (!user) {
@@ -29,7 +29,7 @@ const loginUser = async (newUser) => {
 
     let updatedUser = await User.findOneAndUpdate(
       { email: newUser.email },
-      { $set: { active: true } },
+      { $set: changes },
       { new: true }
     );
     return updatedUser;
