@@ -8,6 +8,22 @@ const { verifyEmail } = require("../../src/middleware/verifyEmail");
 events = (socket) => {
   console.log({ Clientsocket: socket.id });
 
+  // Update idSocket
+  socket.on("update_idsocket", async (data) => {
+    try {
+      data.body = {
+        idSocket: socket.id,
+      };
+      console.log(`Body: ${data.body}`);
+      const updatedUser = await userService.updateOneUser(
+        data.email,
+        data.body
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   // Create new user
   socket.on("new_user", async (data) => {
     const validToken = await verifyToken(data.token);
@@ -73,23 +89,6 @@ events = (socket) => {
     }
   });
 
-  // Update idSocket
-  socket.on("update_idsocket", async (data) => {
-    try {
-      data.body = {
-        idSocket: socket.id,
-      };
-      console.log(data.body);
-      const updatedUser = await userService.updateOneUser(
-        data.email,
-        data.body
-      );
-      socket.emit("update_idsocket", updatedUser);
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
   // Update acolyte values
   socket.on("update_acolyte_values", async (data) => {
     try {
@@ -149,8 +148,19 @@ events = (socket) => {
     }
   });
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", async () => {
     console.log("Client disconnected: ", socket.id);
+    try {
+      const changes = {
+        idSocket: null,
+      };
+      const updatedUser = await userService.updateOneUserBySocketId(
+        socket.id,
+        changes
+      );
+    } catch (error) {
+      console.log(error);
+    }
   });
 };
 
