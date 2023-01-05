@@ -57,10 +57,17 @@ const updateOnCrypt = async (userEmail, changes) => {
   }
 };
 
-const updateAcolytesEnduranceAndConcentration = async () => {
+const updateAcolytesEndurance = async () => {
   try {
-    const updatedAcolytes =
-      await User.updateAcolytesEnduranceAndConcentration();
+    const updatedAcolytes = await User.updateAcolytesEndurance();
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateAcolytesConcentration = async () => {
+  try {
+    const updatedAcolytes = await User.updateAcolytesConcentration();
   } catch (error) {
     throw error;
   }
@@ -81,6 +88,7 @@ module.exports = {
   updateOneUser,
   updateOneUserBySocketId,
   updateOnCrypt,
-  updateAcolytesEnduranceAndConcentration,
+  updateAcolytesEndurance,
+  updateAcolytesConcentration,
   updateAcolytesState,
 };

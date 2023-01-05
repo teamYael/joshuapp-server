@@ -7,8 +7,9 @@ const enduranceNodeCron = async () => {
   // Node-cron to update endurance and concentration
   cron.schedule("0 0 */1 * * *", async () => {
     try {
-      const updatedAcolytes =
-        await userService.updateAcolytesEnduranceAndConcentration();
+      const updatedEndurance = await userService.updateAcolytesEndurance();
+      const updatedConcentration =
+        await userService.updateAcolytesConcentration();
       const acolytesStateUpdated = await userService.updateAcolytesState();
       const acolytes = await userService.getAcolitsUsers();
       console.log(acolytes);
