@@ -88,7 +88,7 @@ const updateOnCrypt = async (userEmail, changes) => {
   }
 };
 
-const updateAcolytesEnduranceAndConcentration = async () => {
+const updateAcolytesEndurance = async () => {
   try {
     const updatedAcolytes = await User.updateMany(
       {
@@ -96,7 +96,7 @@ const updateAcolytesEnduranceAndConcentration = async () => {
         userState: { $eq: "awake" },
         endurance: { $gt: 10 },
       },
-      { $inc: { endurance: -10, concentration: -10 } }
+      { $inc: { endurance: -10 } }
     )
       .then(() => {
         return User.updateMany(
@@ -105,7 +105,35 @@ const updateAcolytesEnduranceAndConcentration = async () => {
             userState: { $eq: "sleeping" },
             endurance: { $lt: 100 },
           },
-          { $inc: { endurance: 10, concentration: 10 } }
+          { $inc: { endurance: 10 } }
+        );
+      })
+      .catch((error) => {
+        throw error;
+      });
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateAcolytesConcentration = async () => {
+  try {
+    const updatedAcolytes = await User.updateMany(
+      {
+        joshua: { $eq: false },
+        userState: { $eq: "awake" },
+        concentration: { $gt: 10 },
+      },
+      { $inc: { concentration: -10 } }
+    )
+      .then(() => {
+        return User.updateMany(
+          {
+            joshua: { $eq: false },
+            userState: { $eq: "sleeping" },
+            concentration: { $lt: 100 },
+          },
+          { $inc: { concentration: 10 } }
         );
       })
       .catch((error) => {
@@ -135,6 +163,7 @@ module.exports = {
   updateOneUser,
   updateOneUserBySocketId,
   updateOnCrypt,
-  updateAcolytesEnduranceAndConcentration,
+  updateAcolytesEndurance,
+  updateAcolytesConcentration,
   updateAcolytesState,
 };
