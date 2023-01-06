@@ -13,7 +13,10 @@ const enduranceNodeCron = async () => {
       const acolytesStateUpdated = await userService.updateAcolytesState();
       const acolytes = await userService.getAcolitsUsers();
       console.log(acolytes);
-      io.emit("node_cron", acolytes);
+      const connectedUsersIdSocket =
+        await userService.getConnectedUsersIdSocket();
+
+      io.to(connectedUsersIdSocket).emit("node_cron", acolytes);
     } catch (error) {
       console.log(error);
     }

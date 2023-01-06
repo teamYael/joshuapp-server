@@ -102,7 +102,14 @@ events = (socket) => {
         data.body
       );
       console.log(`UPDATED: ${updatedUser}`);
-      io.emit("update_acolyte_values", updatedUser);
+
+      const connectedJoshuaUsersIds =
+        await userService.getConnectedJoshuaUsersIdSocket();
+      if (updatedUser.idSocket !== null) {
+        connectedJoshuaUsersIds.push(updatedUser.idSocket);
+      }
+
+      io.to(connectedJoshuaUsersIds).emit("update_acolyte_values", updatedUser);
     } catch (error) {
       console.log(error);
       socket.emit("update_acolyte_valuesError", error);
@@ -113,7 +120,9 @@ events = (socket) => {
   socket.on("create_new_doll", async () => {
     try {
       const createdDoll = await dollService.createNewDoll();
-      io.emit("create_new_doll", createdDoll);
+      const connectedUsersIdSocket =
+        await userService.getConnectedUsersIdSocket();
+      io.to(connectedUsersIdSocket).emit("create_new_doll", createdDoll);
     } catch (error) {
       console.log(error);
     }
@@ -123,7 +132,9 @@ events = (socket) => {
   socket.on("update_doll", async (data) => {
     try {
       const updatedDoll = await dollService.updateDoll(data.id, data.body);
-      io.emit("update_doll", updatedDoll);
+      const connectedUsersIdSocket =
+        await userService.getConnectedUsersIdSocket();
+      io.to(connectedUsersIdSocket).emit("update_doll", updatedDoll);
     } catch (error) {
       console.log(error);
     }
@@ -136,17 +147,21 @@ events = (socket) => {
         data.id,
         data.body
       );
-      io.emit("update_dollpiece", updatedDollPiece);
+      const connectedUsersIdSocket =
+        await userService.getConnectedUsersIdSocket();
+      io.to(connectedUsersIdSocket).emit("update_dollpiece", updatedDollPiece);
     } catch (error) {
       console.log(error);
     }
   });
 
   // Delete doll
-  socket.on("delete_doll", async (data) => {
+  socket.on("delete_doll", async () => {
     try {
       const deletedDoll = await dollService.deleteDoll();
-      io.emit("delete_doll", deletedDoll);
+      const connectedUsersIdSocket =
+        await userService.getConnectedUsersIdSocket();
+      io.to(connectedUsersIdSocket).emit("delete_doll", deletedDoll);
     } catch (error) {
       console.log(error);
     }

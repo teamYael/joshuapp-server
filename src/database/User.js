@@ -156,6 +156,32 @@ const updateAcolytesState = async () => {
   }
 };
 
+const getConnectedUsersIdSocket = async () => {
+  try {
+    const connectedUsersIds = [];
+    (await User.find({ idSocket: { $ne: null } })).forEach((user) =>
+      connectedUsersIds.push(user.idSocket)
+    );
+    console.log(connectedUsersIds);
+    return connectedUsersIds;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getConnectedJoshuaUsersIdSocket = async () => {
+  try {
+    const connectedJoshuaUsersIds = [];
+    (await User.find({ idSocket: { $ne: null }, joshua: true })).forEach(
+      (user) => connectedJoshuaUsersIds.push(user.idSocket)
+    );
+    console.log(connectedJoshuaUsersIds);
+    return connectedJoshuaUsersIds;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getAcolitsUsers,
   getOneUser,
@@ -166,4 +192,6 @@ module.exports = {
   updateAcolytesEndurance,
   updateAcolytesConcentration,
   updateAcolytesState,
+  getConnectedUsersIdSocket,
+  getConnectedJoshuaUsersIdSocket,
 };
