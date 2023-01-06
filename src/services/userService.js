@@ -81,6 +81,25 @@ const updateAcolytesState = async () => {
   }
 };
 
+const getConnectedUsersIdSocket = async () => {
+  try {
+    const connectedUsers = await User.getConnectedUsersIdSocket();
+    return connectedUsers;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getConnectedJoshuaUsersIdSocket = async () => {
+  try {
+    const connectedJoshuaUsersIds =
+      await User.getConnectedJoshuaUsersIdSocket();
+    return connectedJoshuaUsersIds;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getAcolitsUsers,
   getOneUser,
@@ -91,4 +110,6 @@ module.exports = {
   updateAcolytesEndurance,
   updateAcolytesConcentration,
   updateAcolytesState,
+  getConnectedUsersIdSocket,
+  getConnectedJoshuaUsersIdSocket,
 };
