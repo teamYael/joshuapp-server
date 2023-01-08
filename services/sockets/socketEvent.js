@@ -116,6 +116,20 @@ events = (socket) => {
     }
   });
 
+  // Update onCrypt state
+  socket.on("update_onCrypt_value", async (data) => {
+    try {
+      const updatedUser = await userService.updateOnCrypt(data.email);
+      const connectedJoshuaUsersIds =
+        await userService.getConnectedJoshuaUsersIdSocket();
+      connectedJoshuaUsersIds.push(updatedUser.idSocket);
+
+      io.to(connectedJoshuaUsersIds).emit("update_onCrypt_value", updatedUser);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   // Create new doll
   socket.on("create_new_doll", async () => {
     try {

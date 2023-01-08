@@ -64,9 +64,9 @@ const updateOneUserBySocketId = async (userSocketId, changes) => {
   }
 };
 
-const updateOnCrypt = async (userEmail, changes) => {
+const updateOnCrypt = async (userEmail) => {
   try {
-    let user = await User.findOne({ email: userEmail });
+    const user = await User.findOne({ email: userEmail });
     let oncrypt_aux;
 
     if (user.onCrypt) {
@@ -75,7 +75,7 @@ const updateOnCrypt = async (userEmail, changes) => {
       oncrypt_aux = true;
     }
 
-    let updatedUser = await User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       { email: userEmail },
       {
         $set: { onCrypt: oncrypt_aux },
