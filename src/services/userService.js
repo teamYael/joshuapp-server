@@ -48,9 +48,9 @@ const updateOneUserBySocketId = async (userSocketId, changes) => {
   }
 };
 
-const updateOnCrypt = async (userEmail, changes) => {
+const updateOnCrypt = async (userEmail) => {
   try {
-    const updatedUser = User.updateOnCrypt(userEmail, changes);
+    const updatedUser = User.updateOnCrypt(userEmail);
     return updatedUser;
   } catch (error) {
     throw error;
