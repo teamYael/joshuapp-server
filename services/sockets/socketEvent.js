@@ -62,6 +62,7 @@ events = (socket) => {
         onCrypt: false,
         idSocket: socket.id,
         userState: "awake",
+        genre: data.claims.email == "oier.andueza@ikasle.aeg.eus" ? "Woman" : "Man"
       };
 
       const changes = {
