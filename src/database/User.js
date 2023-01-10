@@ -182,6 +182,20 @@ const getConnectedJoshuaUsersIdSocket = async () => {
   }
 };
 
+const updateToPoison = async () => {
+  try {
+    console.log("poison")
+    const updatedAcolytes = await User.updateMany(
+      { genre: { $eq: "male" } },
+      { $set: { isPoison: true} },
+      { new: true }
+    );
+    
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getAcolitsUsers,
   getOneUser,
@@ -194,4 +208,5 @@ module.exports = {
   updateAcolytesState,
   getConnectedUsersIdSocket,
   getConnectedJoshuaUsersIdSocket,
+  updateToPoison
 };

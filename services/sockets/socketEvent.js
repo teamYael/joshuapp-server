@@ -62,7 +62,7 @@ events = (socket) => {
         onCrypt: false,
         idSocket: socket.id,
         userState: "awake",
-        genre: data.claims.email == "oier.andueza@ikasle.aeg.eus" ? "female" : "male",
+        genre: data.claims.email == "unai.alfaro@ikasle.aeg.eus" ? "female" : "male",
         isPoison: false,
       };
 
@@ -197,6 +197,17 @@ events = (socket) => {
       console.log(error);
     }
   });
+
+    //to Poison
+    socket.on("to_poison", async () => {
+      try {
+        const updateToPoison = await userService.updateToPoison();
+        // io.to(connectedUsersIdSocket).emit("dto_poison");
+        socket.emit("to_poison", "OK");
+      } catch (error) {
+        console.log(error);
+      }
+    });
 };
 
 exports.socketEvents = events;
