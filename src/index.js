@@ -4,12 +4,12 @@ const http = require("http");
 const socketIO = require("socket.io");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const mongodbRoute = `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@cluster0.j8erkam.mongodb.net/JoshuApp`;
+const mongodbRoute = `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@e4p1.bntdsno.mongodb.net/JoshuApp`;
 
 //Josu `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@e4p1.gye2wcf.mongodb.net/JoshuApp'
 //Unai: 'mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@cluster0.j8erkam.mongodb.net/JoshuApp'
 //Yael: `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@e4p1.zrnbvtk.mongodb.net/JoshuApp`
-//Oier: `mongodb+srv://${process.env.PASSWORD}:${process.env.PASSWORD}@e4p1.bntdsno.mongodb.net/JoshuApp`
+//Oier: `mongodb+srv://${process.env.DBUSERNAME}:${process.env.PASSWORD}@e4p1.bntdsno.mongodb.net/JoshuApp`
 
 const userRouter = require("./routes/userRoutes");
 const dollRouter = require("./routes/dollRoutes");
