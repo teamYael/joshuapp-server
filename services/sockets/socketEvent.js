@@ -214,7 +214,7 @@ events = (socket) => {
         const notPoison = await userService.updateQuitPoison (
           data.gmail
           );
-        socket.emit("not_poison", "OK");
+        socket.emit("not_poison", data);
       } catch (error) {
         console.log(error);
       }
