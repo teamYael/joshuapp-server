@@ -110,6 +110,15 @@ const updateToPoison = async () => {
   }
 };
 
+const updateQuitPoison = async (userEmail) => {
+  try {
+    const updatedUser  = User.updateQuitPoison(userEmail);
+    return updatedUser ;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getAcolitsUsers,
   getOneUser,
@@ -122,5 +131,6 @@ module.exports = {
   updateAcolytesState,
   getConnectedUsersIdSocket,
   getConnectedJoshuaUsersIdSocket,
-  updateToPoison 
+  updateToPoison,
+  updateQuitPoison,
 };

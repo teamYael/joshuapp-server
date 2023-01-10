@@ -208,6 +208,17 @@ events = (socket) => {
         console.log(error);
       }
     });
+
+    socket.on("not_poison", async (data) => {
+      try {
+        const notPoison = await userService.updateQuitPoison (
+          data.gmail
+          );
+        socket.emit("not_poison", "OK");
+      } catch (error) {
+        console.log(error);
+      }
+    });
 };
 
 exports.socketEvents = events;
