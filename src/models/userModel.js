@@ -11,10 +11,12 @@ const userSchema = new Schema({
   life: Number,
   money: Number,
   onCrypt: Boolean,
-  concentration: { type: Number, min: 0, max: 100},
+  concentration: { type: Number, min: 0, max: 100 },
   endurance: { type: Number, min: 0, max: 100 },
   idSocket: String,
   userState: String,
+  genre: String,
+  isPoison: Boolean,
 });
 
 module.exports = mongoose.model("User", userSchema);

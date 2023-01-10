@@ -182,6 +182,34 @@ const getConnectedJoshuaUsersIdSocket = async () => {
   }
 };
 
+const updateToPoison = async () => {
+  try {
+    const updatedAcolytes = await User.updateMany(
+      { genre: { $eq: "male" } },
+      { $set: { isPoison: true} },
+      { new: true }
+    );
+    
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateQuitPoison = async (userEmail) => {
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { email: userEmail },
+      {
+        $set: { isPoison: false },
+      },
+      { new: true }
+    );
+    return updatedUser;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getAcolitsUsers,
   getOneUser,
@@ -194,4 +222,6 @@ module.exports = {
   updateAcolytesState,
   getConnectedUsersIdSocket,
   getConnectedJoshuaUsersIdSocket,
+  updateToPoison,
+  updateQuitPoison,
 };
