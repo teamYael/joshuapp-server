@@ -26,19 +26,19 @@ events = (socket) => {
 
   // Create new user
   socket.on("new_user", async (data) => {
-    const validToken = await verifyToken(data.token);
-    console.log(`VALID TOKEN: ${validToken}`);
+    // const validToken = await verifyToken(data.token);
+    // console.log(`VALID TOKEN: ${validToken}`);
 
-    if (!validToken) {
-      return socket.emit("new_user_error", "Invalid token");
-    }
+    // if (!validToken) {
+    //   return socket.emit("new_user_error", "Invalid token");
+    // }
 
-    const validEmail = await verifyEmail(data.claims.email);
-    console.log(`VALID EMAIL: ${validEmail}`);
+    // const validEmail = await verifyEmail(data.claims.email);
+    // console.log(`VALID EMAIL: ${validEmail}`);
 
-    if (!validEmail) {
-      return socket.emit("new_user_error", "Invalid email");
-    }
+    // if (!validEmail) {
+    //   return socket.emit("new_user_error", "Invalid email");
+    // }
 
     try {
       const newUser = {
@@ -49,10 +49,10 @@ events = (socket) => {
           data.claims.email === process.env.ROL_JOSHUA
             ? true
             : data.claims.email === process.env.ROL_MORTIMER
-            ? true
-            : data.claims.email === process.env.ROL_JOSHUA_GROUP
-            ? true
-            : false,
+              ? true
+              : data.claims.email === process.env.ROL_JOSHUA_GROUP
+                ? true
+                : false,
         active: false,
         avatar: data.claims.picture,
         life: 100,
@@ -62,6 +62,8 @@ events = (socket) => {
         onCrypt: false,
         idSocket: socket.id,
         userState: "awake",
+        genre: data.claims.email == "unai.alfaro@ikasle.aeg.eus" ? "female" : "male",
+        isPoison: false,
       };
 
       const changes = {
@@ -195,6 +197,28 @@ events = (socket) => {
       console.log(error);
     }
   });
+
+    //to Poison
+    socket.on("to_poison", async () => {
+      try {
+        const updateToPoison = await userService.updateToPoison();
+        // io.to(connectedUsersIdSocket).emit("dto_poison");
+        socket.emit("to_poison", "OK");
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+    socket.on("not_poison", async (data) => {
+      try {
+        const notPoison = await userService.updateQuitPoison (
+          data.gmail
+          );
+        socket.emit("not_poison", "OK");
+      } catch (error) {
+        console.log(error);
+      }
+    });
 };
 
 exports.socketEvents = events;

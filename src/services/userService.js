@@ -100,6 +100,25 @@ const getConnectedJoshuaUsersIdSocket = async () => {
   }
 };
 
+const updateToPoison = async () => {
+  try {
+    const connectedJoshuaUsersIds =
+      await User.updateToPoison();
+    return connectedJoshuaUsersIds;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateQuitPoison = async (userEmail) => {
+  try {
+    const updatedUser  = User.updateQuitPoison(userEmail);
+    return updatedUser ;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getAcolitsUsers,
   getOneUser,
@@ -112,4 +131,6 @@ module.exports = {
   updateAcolytesState,
   getConnectedUsersIdSocket,
   getConnectedJoshuaUsersIdSocket,
+  updateToPoison,
+  updateQuitPoison,
 };
