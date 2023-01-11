@@ -189,7 +189,7 @@ const updateToPoison = async () => {
       { $set: { isPoison: true} },
       { new: true }
     );
-    
+    return updatedAcolytes;
   } catch (error) {
     throw error;
   }

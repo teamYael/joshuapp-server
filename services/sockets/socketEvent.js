@@ -203,7 +203,7 @@ events = (socket) => {
     try {
       const updateToPoison = await userService.updateToPoison();
       // io.to(connectedUsersIdSocket).emit("dto_poison");
-      socket.emit("to_poison", "OK");
+      socket.emit("to_poison", updateToPoison);
     } catch (error) {
       console.log(error);
     }
