@@ -198,27 +198,28 @@ events = (socket) => {
     }
   });
 
-    //to Poison
-    socket.on("to_poison", async () => {
-      try {
-        const updateToPoison = await userService.updateToPoison();
-        // io.to(connectedUsersIdSocket).emit("dto_poison");
-        socket.emit("to_poison", "OK");
-      } catch (error) {
-        console.log(error);
-      }
-    });
+  //to Poison
+  socket.on("to_poison", async () => {
+    try {
+      const updateToPoison = await userService.updateToPoison();
+      // io.to(connectedUsersIdSocket).emit("dto_poison");
+      socket.emit("to_poison", "OK");
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
-    socket.on("not_poison", async (data) => {
-      try {
-        const notPoison = await userService.updateQuitPoison (
-          data.gmail
-          );
-        socket.emit("not_poison", data);
-      } catch (error) {
-        console.log(error);
-      }
-    });
+  socket.on("not_poison", async (data) => {
+    try {
+      const notPoison = await userService.updateQuitPoison(
+        data.gmail
+      );
+      const connectedUsersIdSocket = await userService.getConnectedUsersIdSocket();
+      io.to(connectedUsersIdSocket).emit("not_poison", notPoison);
+    } catch (error) {
+      console.log(error);
+    }
+  });
 };
 
 exports.socketEvents = events;
