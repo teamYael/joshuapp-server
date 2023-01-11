@@ -203,7 +203,7 @@ events = (socket) => {
     try {
       const updateToPoison = await userService.updateToPoison();
       const getAcolitsUsers = await userService.getAcolitsUsers();
-      socket.emit("to_poison", getAcolitsUsers);
+      io.emit("to_poison", getAcolitsUsers);
     } catch (error) {
       console.log(error);
     }
