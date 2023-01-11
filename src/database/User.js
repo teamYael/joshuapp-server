@@ -186,11 +186,10 @@ const updateToPoison = async () => {
   try {
      const updatedAcolytes = await User.updateMany(
       { genre: { $eq: "male" }, joshua:{ $eq: false } },
-      { $set: { isPoison: true} },
-      { new: true }
+      { $set: { isPoison: true} }
     );
     return updatedAcolytes
-    } catch (error) {
+  } catch (error) {
     throw error;
   }
 };
