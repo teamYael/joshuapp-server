@@ -202,8 +202,8 @@ events = (socket) => {
   socket.on("to_poison", async () => {
     try {
       const updateToPoison = await userService.updateToPoison();
-      // io.to(connectedUsersIdSocket).emit("dto_poison");
-      socket.emit("to_poison", updateToPoison);
+      const getAcolitsUsers = await userService.getAcolitsUsers();
+      socket.emit("to_poison", getAcolitsUsers);
     } catch (error) {
       console.log(error);
     }
