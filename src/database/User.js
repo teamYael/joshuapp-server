@@ -184,12 +184,11 @@ const getConnectedJoshuaUsersIdSocket = async () => {
 
 const updateToPoison = async () => {
   try {
-    const updatedAcolytes = await User.updateMany(
-      { genre: { $eq: "male" } },
+     const updatedAcolytes = await User.updateMany(
+      { genre: { $eq: "male" }, joshua:{ $eq: false } },
       { $set: { isPoison: true} },
       { new: true }
     );
-    return updatedAcolytes;
   } catch (error) {
     throw error;
   }
