@@ -102,9 +102,9 @@ const getConnectedJoshuaUsersIdSocket = async () => {
 
 const updateToPoison = async () => {
   try {
-    const connectedJoshuaUsersIds =
+    const updateAcolites =
       await User.updateToPoison();
-    return connectedJoshuaUsersIds;
+    return updateAcolites;
   } catch (error) {
     throw error;
   }
