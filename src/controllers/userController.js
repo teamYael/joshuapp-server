@@ -1,5 +1,7 @@
 const userService = require("../services/userService");
 const dollService = require("../services/dollService");
+const jwt = require('../helpers/generateToken');
+const { generateToken } = require("../helpers/jwtHelper");
 
 const getInitialData = async (req, res) => {
   const { params: { userEmail } } = req;
