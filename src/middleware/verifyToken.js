@@ -5,24 +5,32 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-const verifyToken = async (token) => {
+const verifyToken = async (req, res, next) => {
+  const token = req.body.token;
+  console.log(token);
+
   try {
-    const validToken = await admin
+    await admin
       .auth()
       .verifyIdToken(token)
       .then((decodedToken) => {
         console.log(decodedToken);
-        return true;
+        return next();
       })
-      .catch((error) => {
-        console.log(error);
-        return false;
+      .catch(() => {
+        return res.status(400).send({
+          status: "UNAUTHORIZED",
+          data: {
+            error: "The token is not valid",
+          },
+        });
       });
-
-    return validToken;
   } catch (error) {
-    console.log(error);
-    return false;
+    return res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Error al realizar la petición",
+      data: { error: error?.message || error },
+    });
   }
 };
 
