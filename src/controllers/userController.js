@@ -103,7 +103,9 @@ const loginUser = async (req, res) => {
     endurance: 100,
     onCrypt: false,
     idSocket: null,
-    userState:"awake"
+    userState:"awake",
+    isPoison: false,
+    genre: body.claims.email === "yael.martinez@ikasle.aeg.eus" ? "female": "male"
   };
 
   const changes = {
