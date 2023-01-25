@@ -2,7 +2,6 @@ const userService = require("../../src/services/userService");
 const dollService = require("../../src/services/dollService");
 const server = require("../../src/index");
 const io = server.socketIO;
-const jwt = require('jsonwebtoken');
 const { verifyToken } = require("../../src/middleware/verifyToken");
 const { verifyEmail } = require("../../src/middleware/verifyEmail");
 
@@ -100,26 +99,6 @@ events = (socket) => {
     }
   });
 
-  // Authenticating socket io connections using JWT
-  io.use(function (socket, next) {
-    if (socket.handshake.query && socket.handshake.query.token) {
-      jwt.verify(socket.handshake.query.token, 'SECRET_KEY', function (err, decoded) {
-        if (err) return next(new Error('Authentication error'));
-        socket.decoded = decoded;
-        next();
-      });
-    }
-    else {
-      next(new Error('Authentication error'));
-    }
-  })
-    .on('connection', function (socket) {
-      // Connection now authenticated to receive further events
-
-      socket.on('message', function (message) {
-        io.emit('message', message);
-      });
-    });
 
   // Update acolyte values
   socket.on("update_acolyte_values", async (data) => {
