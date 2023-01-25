@@ -1,5 +1,7 @@
 const userService = require("../services/userService");
 const dollService = require("../services/dollService");
+const { generateToken } = require("../helpers/jwtHelper");
+const { generatefreshToken } = require("../helpers/jwtHelper");
 
 const getInitialData = async (req, res) => {
   const { params: { userEmail } } = req;
@@ -101,12 +103,40 @@ const loginUser = async (req, res) => {
     endurance: 100,
     onCrypt: false,
     idSocket: null,
-    userState:"awake"
+    userState:"awake",
+    isPoison: false,
+    genre: body.claims.email === "yael.martinez@ikasle.aeg.eus" ? "female": "male"
   };
 
+  const changes = {
+    active: true
+  }
+
   try {
-    const createdUser = await userService.loginUser(newUser);
-    res.status(201).send({ status: "OK", data: createdUser });
+    const resObj = {
+      user: {},
+      body: {}
+    };
+    const createdUser = await userService.loginUser(newUser, changes);
+    const accessToken = generateToken(createdUser.email);
+    const refreshToken = generatefreshToken(createdUser.email);
+    const userObj = createdUser.toObject();
+    userObj.accessToken = accessToken;
+    userObj.refreshToken = refreshToken;
+
+    resObj.user = userObj;
+
+    const allDolls = await dollService.getAllDolls();
+    resObj.body.doll = allDolls;
+
+    if (userObj.joshua) {
+      const acolytes = await userService.getAcolitsUsers();
+      resObj.body.acolytes = acolytes;
+    } else {
+      resObj.body.acolyte = createdUser;
+    }
+
+    res.status(201).send({ status: "OK", data: resObj });
   } catch (error) {
     res.status(error?.status || 500).send({
       status: "FAILED",
