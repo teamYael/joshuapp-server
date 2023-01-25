@@ -1,6 +1,6 @@
 # fly.toml file generated for joshuapp-staging on 2022-11-08T08:36:00+01:00
 
-app = "joshuapp-production"
+app = "joshuapp-staging"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
