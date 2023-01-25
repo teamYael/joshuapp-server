@@ -2,8 +2,11 @@ const userService = require("../../src/services/userService");
 const dollService = require("../../src/services/dollService");
 const server = require("../../src/index");
 const io = server.socketIO;
+const jwt = require('jsonwebtoken');
 const { verifyToken } = require("../../src/middleware/verifyToken");
 const { verifyEmail } = require("../../src/middleware/verifyEmail");
+
+
 
 events = (socket) => {
   console.log({ Clientsocket: socket.id });
@@ -40,6 +43,7 @@ events = (socket) => {
       return socket.emit("new_user_error", "Invalid email");
     }
 
+
     try {
       const newUser = {
         token: data.token,
@@ -49,10 +53,10 @@ events = (socket) => {
           data.claims.email === process.env.ROL_JOSHUA
             ? true
             : data.claims.email === process.env.ROL_MORTIMER
-            ? true
-            : data.claims.email === process.env.ROL_JOSHUA_GROUP
-            ? true
-            : false,
+              ? true
+              : data.claims.email === process.env.ROL_JOSHUA_GROUP
+                ? true
+                : false,
         active: false,
         avatar: data.claims.picture,
         life: 100,
@@ -95,6 +99,27 @@ events = (socket) => {
       console.log(error);
     }
   });
+
+  // Authenticating socket io connections using JWT
+  io.use(function (socket, next) {
+    if (socket.handshake.query && socket.handshake.query.token) {
+      jwt.verify(socket.handshake.query.token, 'SECRET_KEY', function (err, decoded) {
+        if (err) return next(new Error('Authentication error'));
+        socket.decoded = decoded;
+        next();
+      });
+    }
+    else {
+      next(new Error('Authentication error'));
+    }
+  })
+    .on('connection', function (socket) {
+      // Connection now authenticated to receive further events
+
+      socket.on('message', function (message) {
+        io.emit('message', message);
+      });
+    });
 
   // Update acolyte values
   socket.on("update_acolyte_values", async (data) => {
