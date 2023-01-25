@@ -106,12 +106,16 @@ const loginUser = async (req, res) => {
     userState:"awake"
   };
 
+  const changes = {
+    active: true
+  }
+
   try {
     const resObj = {
       user: {},
       body: {}
     };
-    const createdUser = await userService.loginUser(newUser);
+    const createdUser = await userService.loginUser(newUser, changes);
     const accessToken = generateToken(createdUser.email);
     const refreshToken = generatefreshToken(createdUser.email);
     const userObj = createdUser.toObject();
