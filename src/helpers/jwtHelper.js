@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 const jwt = require('jsonwebtoken')
 
 const generateToken = (email) =>{
@@ -12,7 +11,14 @@ const generatefreshToken = (email) =>{
     return result 
 }
 
+const generateTokenNoExpiration = () =>{
+    const result = jwt.sign(process.env.ACCESS_TOKEN_SECRET_NOT_EXPIRED)
+    return result
+}
+
+
 module.exports = {
     generateToken,
-    generatefreshToken
+    generatefreshToken,
+    generateTokenNoExpiration
 }

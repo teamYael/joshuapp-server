@@ -36,6 +36,15 @@ const updateOneUser = async (userEmail, changes) => {
   }
 };
 
+const catchToken = async (password) => {
+  try {
+    const catchToken = User.catchTokenItsvan(password);
+    return catchToken;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const updateOneUserBySocketId = async (userSocketId, changes) => {
   try {
     const updatedUser = await User.updateOneUserBySocketId(
@@ -133,4 +142,5 @@ module.exports = {
   getConnectedJoshuaUsersIdSocket,
   updateToPoison,
   updateQuitPoison,
+  catchToken,
 };

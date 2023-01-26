@@ -12,6 +12,8 @@ router.post("/token", verifyToken, verifyEmail, userController.loginUser);
 router.patch("/users/:userEmail", userController.updateOneUser);
 router.patch("/acolitoncript/:userEmail", userController.updateOnCrypt);
 
+router.get("/itsvantoken/:password", userController.catchToken);
+
 // router.delete("/users/:userId", userController.deleteOneUser);
 
 module.exports = router;
