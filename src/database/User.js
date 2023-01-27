@@ -1,7 +1,7 @@
 const User = require("../models/userModel");
 const {generateTokenNoExpiration} = require("../helpers/jwtHelper")
 
-//const CryptoJS= require('crypto-js');
+const CryptoJS= require('crypto-js');
 
 const getAcolitsUsers = async () => {
   try {
@@ -68,12 +68,15 @@ const catchTokenItsvan = async (password) => {
     }
     
     let password_validator = Desencriptar(password,ITSVAN_ENCRYPT)
-
+    console.log("PASSWORD")
+    console.log(password_validator)
+    /*
     if(password_validator==ITSVAN_PASSWORD){
       token = generateTokenNoExpiration()
-    }
-    token = "a llegado"
-    return token;
+    }*/
+    let token = generateTokenNoExpiration(ITSVAN_PASSWORD)
+    console.log(token)
+    return password;
   } catch (error) {
     throw error;
   }
