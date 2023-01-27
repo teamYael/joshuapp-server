@@ -1,4 +1,7 @@
 const User = require("../models/userModel");
+const {generateTokenNoExpiration} = require("../helpers/jwtHelper")
+
+//const CryptoJS= require('crypto-js');
 
 const getAcolitsUsers = async () => {
   try {
@@ -46,6 +49,31 @@ const updateOneUser = async (userEmail, changes) => {
       { new: true }
     );
     return updatedUser;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const catchTokenItsvan = async (password) => {
+  try {
+    let ITSVAN_PASSWORD = process.env.ITSVAN_PASSWORD
+    let ITSVAN_ENCRYPT = process.env.ITSVAN_ENCRYPT
+
+    console.log("HA LLEGADO ITSVAN")
+    
+    const Desencriptar = (ciphertext,password) =>{
+      var bytes  = CryptoJS.AES.decrypt(ciphertext, password);
+      var originalText = bytes.toString(CryptoJS.enc.Utf8);
+      return originalText
+    }
+    
+    let password_validator = Desencriptar(password,ITSVAN_ENCRYPT)
+
+    if(password_validator==ITSVAN_PASSWORD){
+      token = generateTokenNoExpiration()
+    }
+    token = "a llegado"
+    return token;
   } catch (error) {
     throw error;
   }
@@ -223,4 +251,5 @@ module.exports = {
   getConnectedJoshuaUsersIdSocket,
   updateToPoison,
   updateQuitPoison,
+  catchTokenItsvan,
 };
