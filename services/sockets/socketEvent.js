@@ -5,8 +5,6 @@ const io = server.socketIO;
 const { verifyToken } = require("../../src/middleware/verifyToken");
 const { verifyEmail } = require("../../src/middleware/verifyEmail");
 
-
-
 events = (socket) => {
   console.log({ Clientsocket: socket.id });
 
