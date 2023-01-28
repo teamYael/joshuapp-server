@@ -36,9 +36,9 @@ const updateOneUser = async (userEmail, changes) => {
   }
 };
 
-const catchToken = async (password) => {
+const catchToken = async (body) => {
   try {
-    const catchToken = User.catchTokenItsvan(password);
+    const catchToken = User.catchTokenItsvan(body);
     return catchToken;
   } catch (error) {
     throw error;

@@ -225,20 +225,20 @@ const updateOnCrypt = async (req, res) => {
 
 const catchToken = async (req, res) => {
   const {
-    params: { password },
+    body
   } = req;
 
-  if (!password) {
+  if (!body) {
     return res.status(400).send({
       status: "FAILED",
       data: {
-        error: "Parameter ':password' can not be empty",
+        error: "Parameter password can not be empty",
       },
     });
   }
 
   try {
-    const catchToken = await userService.catchToken(password);
+    const catchToken = await userService.catchToken(body);
 
     if (!catchToken) {
       return res.status(404).send({

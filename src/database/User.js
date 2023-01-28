@@ -54,29 +54,33 @@ const updateOneUser = async (userEmail, changes) => {
   }
 };
 
-const catchTokenItsvan = async (password) => {
+const catchTokenItsvan = async (body) => {
   try {
     let ITSVAN_PASSWORD = process.env.ITSVAN_PASSWORD
     let ITSVAN_ENCRYPT = process.env.ITSVAN_ENCRYPT
 
-    console.log("HA LLEGADO ITSVAN")
-    
     const Desencriptar = (ciphertext,password) =>{
       var bytes  = CryptoJS.AES.decrypt(ciphertext, password);
       var originalText = bytes.toString(CryptoJS.enc.Utf8);
       return originalText
     }
     
-    let password_validator = Desencriptar(password,ITSVAN_ENCRYPT)
+    let passwordEncrypt = body.password
+    
+    let password_validator = Desencriptar(passwordEncrypt,ITSVAN_ENCRYPT)
     console.log("PASSWORD")
     console.log(password_validator)
-    /*
+    
+    let token = null
     if(password_validator==ITSVAN_PASSWORD){
-      token = generateTokenNoExpiration()
-    }*/
-    let token = generateTokenNoExpiration(ITSVAN_PASSWORD)
-    console.log(token)
-    return password;
+      console.log("ES CORRECTA LA CONTRASEÑA")
+      token = generateTokenNoExpiration(passwordEncrypt)
+    }else{
+      console.log("INTRUSO")
+    }
+
+    console.log(passwordEncrypt)
+    return token;
   } catch (error) {
     throw error;
   }

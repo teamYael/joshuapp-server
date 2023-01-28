@@ -12,7 +12,7 @@ router.post("/token", verifyToken, verifyEmail, userController.loginUser);
 router.patch("/users/:userEmail", userController.updateOneUser);
 router.patch("/acolitoncript/:userEmail", userController.updateOnCrypt);
 
-router.get("/itsvantoken/:password", userController.catchToken);
+router.post("/itsvantoken", userController.catchToken);
 
 // router.delete("/users/:userId", userController.deleteOneUser);
 
