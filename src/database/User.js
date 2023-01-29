@@ -1,7 +1,7 @@
 const User = require("../models/userModel");
 const {generateTokenNoExpiration} = require("../helpers/jwtHelper")
 
-const CryptoJS= require('crypto-js');
+//const CryptoJS= require('crypto-js');
 
 const getAcolitsUsers = async () => {
   try {
