@@ -13,7 +13,12 @@ const authenticateToken = (req, res, next) => {
     if (error) {
       console.log("FORBIDDEN");
       console.log(error);
-      return res.sendStatus(403);
+
+      if (error.name === "TokenExpiredError") {
+        return res.status(400).send({ data: "Token expired" });
+      } else {
+        return res.sendStatus(403);
+      }
     }
 
     req.email = email;
