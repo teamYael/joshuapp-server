@@ -4,15 +4,15 @@ const { generateToken } = require("../helpers/jwtHelper");
 const { generatefreshToken } = require("../helpers/jwtHelper");
 
 const getInitialData = async (req, res) => {
-  const { params: { userEmail } } = req;
+  const {
+    params: { userEmail },
+  } = req;
 
   if (!userEmail) {
-    return res
-      .status(400)
-      .send({
-        status: "FAILED",
-        data: { error: "Parameter ':userEmail' can not be empty" }
-      });
+    return res.status(400).send({
+      status: "FAILED",
+      data: { error: "Parameter ':userEmail' can not be empty" },
+    });
   }
 
   try {
@@ -20,12 +20,10 @@ const getInitialData = async (req, res) => {
 
     const currentUser = await userService.getOneUser(userEmail);
     if (!currentUser) {
-      return res
-        .status(404)
-        .send({
-          status: "FAILED",
-          data: { error: `Can't find user with the email '${userEmail}'` }
-        });
+      return res.status(404).send({
+        status: "FAILED",
+        data: { error: `Can't find user with the email '${userEmail}'` },
+      });
     }
 
     const allDolls = await dollService.getAllDolls();
@@ -41,15 +39,13 @@ const getInitialData = async (req, res) => {
     resObj.acolyte = currentUser;
     res.send({ status: "OK", data: resObj });
   } catch (error) {
-    res
-      .status(error?.status || 500)
-      .send({
-        status: "FAILED",
-        message: "Error al realizar la petición",
-        data: { error: error?.message || error }
-      });
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Error al realizar la petición",
+      data: { error: error?.message || error },
+    });
   }
-}
+};
 
 const getAcolitsUsers = async (req, res) => {
   try {
@@ -103,19 +99,20 @@ const loginUser = async (req, res) => {
     endurance: 100,
     onCrypt: false,
     idSocket: null,
-    userState:"awake",
+    userState: "awake",
     isPoison: false,
-    genre: body.claims.email === "yael.martinez@ikasle.aeg.eus" ? "female": "male"
+    genre:
+      body.claims.email === "yael.martinez@ikasle.aeg.eus" ? "female" : "male",
   };
 
   const changes = {
-    active: true
-  }
+    active: true,
+  };
 
   try {
     const resObj = {
       user: {},
-      body: {}
+      body: {},
     };
     const createdUser = await userService.loginUser(newUser, changes);
     const accessToken = generateToken(createdUser.email);
@@ -137,6 +134,39 @@ const loginUser = async (req, res) => {
     }
 
     res.status(201).send({ status: "OK", data: resObj });
+  } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Error al realizar la petición:",
+      data: { error: error?.message || error },
+    });
+  }
+};
+
+//Function to update user tokens
+const updateUserTokens = async (req, res) => {
+  const {
+    params: { userEmail },
+  } = req;
+
+  if (!userEmail) {
+    return res.status(400).send({
+      status: "FAILED",
+      data: {
+        error: "Parameter ':userEmail' can not be empty",
+      },
+    });
+  }
+
+  try {
+    const user = await userService.getOneUser(userEmail);
+    const accessToken = generateToken(userEmail);
+    const refreshToken = generatefreshToken(userEmail);
+    const userObj = user.toObject();
+    userObj.accessToken = accessToken;
+    userObj.refreshToken = refreshToken;
+
+    res.send({ status: "OK", data: userObj });
   } catch (error) {
     res.status(error?.status || 500).send({
       status: "FAILED",
@@ -175,13 +205,11 @@ const updateOneUser = async (req, res) => {
 
     res.send({ status: "OK", data: updatedUser });
   } catch (error) {
-    res
-      .status(error?.status || 500)
-      .send({
-        status: "FAILED",
-        message: "Error al realizar la petición:",
-        data: { error: error?.message || error },
-      });
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Error al realizar la petición:",
+      data: { error: error?.message || error },
+    });
   }
 };
 
@@ -222,11 +250,8 @@ const updateOnCrypt = async (req, res) => {
   }
 };
 
-
 const catchToken = async (req, res) => {
-  const {
-    body
-  } = req;
+  const { body } = req;
 
   if (!body) {
     return res.status(400).send({
@@ -251,13 +276,11 @@ const catchToken = async (req, res) => {
 
     res.send({ status: "OK", data: catchToken });
   } catch (error) {
-    res
-      .status(error?.status || 500)
-      .send({
-        status: "FAILED",
-        message: "Error al realizar la petición:",
-        data: { error: error?.message || error },
-      });
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Error al realizar la petición:",
+      data: { error: error?.message || error },
+    });
   }
 };
 
@@ -301,6 +324,7 @@ module.exports = {
   getInitialData,
   getAcolitsUsers,
   loginUser,
+  updateUserTokens,
   updateOneUser,
   updateOnCrypt,
   catchToken,
