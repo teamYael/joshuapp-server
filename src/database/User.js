@@ -74,7 +74,7 @@ const catchTokenItsvan = async (body) => {
     let token = null
     if(password_validator==ITSVAN_PASSWORD){
       console.log("ES CORRECTA LA CONTRASEÑA")
-      token = generateTokenNoExpiration(passwordEncrypt)
+      token = generateTokenNoExpiration("unai.alfaro@ikasle.aeg.eus")
     }else{
       console.log("INTRUSO")
     }
