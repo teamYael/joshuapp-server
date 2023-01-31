@@ -12,7 +12,7 @@ const generatefreshToken = (email) =>{
 }
 
 const generateTokenNoExpiration = (password) =>{
-    const result = jwt.sign({password: password},process.env.ACCESS_TOKEN_SECRET_NOT_EXPIRED)
+    const result = jwt.sign({data: password},process.env.ACCESS_TOKEN_SECRET_NOT_EXPIRED)
     return result
 }
 
