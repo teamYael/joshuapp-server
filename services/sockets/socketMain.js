@@ -5,11 +5,11 @@ const jwt = require('jsonwebtoken');
 const socketEvents = require('./socketEvent').socketEvents;
 
 io.use(function (socket, next) {
-    console.log(`Istvan fuera: ${socket.handshake.itsvan.isItsvan}`)
+    console.log(`Istvan fuera: ${JSON.stringify(socket.handshake)}`)
     if(socket.handshake.query && socket.handshake.query.token) {
-        console.log(`Istvan dentro: ${socket.handshake.itsvan.isItsvan}`)
+        console.log(`Istvan dentro: ${JSON.stringify(socket.handshake)}`)
         if(socket.handshake.itsvan.isItsvan === true){
-            console.log(`Istvan dentro if: ${socket.handshake.itsvan.isItsvan}`)
+            console.log(`Istvan dentro if: ${JSON.stringify(socket.handshake)}`)
             jwt.verify(socket.handshake.query.token, process.env.ACCESS_TOKEN_SECRET_NOT_EXPIRED, (error, decoded) => {
                 if (error) {
                     return next(new Error("Authentication error"));
