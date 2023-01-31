@@ -27,27 +27,27 @@ const authenticateToken = (req, res, next) => {
   });
 
 
-  const refreshToken = jwt.sign({
-    username: userCredentials.username,
-  }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
+  // const refreshToken = jwt.sign({
+  //   username: userCredentials.username,
+  // }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
-  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,
-    (err, decoded) => {
-      if (err) {
+  // jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,
+  //   (err, decoded) => {
+  //     if (err) {
 
-        // Wrong Refesh Token
-        return res.status(406).json({ message: 'Unauthorized' });
-      }
-      else {
-        // Correct token we send a new access token
-        const accessToken = jwt.sign({
-          username: userCredentials.username,
-          email: userCredentials.email
-        }, process.env.ACCESS_TOKEN_SECRET, {
-          expiresIn: '10m'
-        });
-        return res.json({ accessToken });
-      }
-    })
+  //       // Wrong Refesh Token
+  //       return res.status(406).json({ message: 'Unauthorized' });
+  //     }
+  //     else {
+  //       // Correct token we send a new access token
+  //       const accessToken = jwt.sign({
+  //         username: userCredentials.username,
+  //         email: userCredentials.email
+  //       }, process.env.ACCESS_TOKEN_SECRET, {
+  //         expiresIn: '10m'
+  //       });
+  //       return res.json({ accessToken });
+  //     }
+  //   })
 };
-exports.authenticateToken = authenticateToken;
+exports.authenticateToken = authenticateToken
