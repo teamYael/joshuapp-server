@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const socketEvents = require('./socketEvent').socketEvents;
 
 io.use(function (socket, next) {
+    console.log(`SOCKET HANDSHAKE: ${socket.handshake}`)
     if(socket.handshake.query && socket.handshake.query.token) {
         console.log(`Istvan: ${socket.handshake.itsvan.isItsvan}`)
         if(socket.handshake.itsvan.isItsvan === true){
