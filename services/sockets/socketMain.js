@@ -6,6 +6,15 @@ const socketEvents = require('./socketEvent').socketEvents;
 
 io.use(function (socket, next) {
     if(socket.handshake.query && socket.handshake.query.token) {
+        if(socket.handshake.itsvan===true){
+            jwt.verify(socket.handshake.query.token, process.env.ACCESS_TOKEN_SECRET_NOT_EXPIRED, (error, decoded) => {
+                if (error) {
+                    return next(new Error("Authentication error"));
+                }
+                socket.decoded = decoded;
+                return next();
+            });
+        }
         jwt.verify(socket.handshake.query.token, process.env.ACCESS_TOKEN_SECRET, (error, decoded) => {
             if (error) {
                 return next(new Error("Authentication error"));
