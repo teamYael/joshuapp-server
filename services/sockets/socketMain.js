@@ -5,9 +5,8 @@ const jwt = require('jsonwebtoken');
 const socketEvents = require('./socketEvent').socketEvents;
 
 io.use(function (socket, next) {
-    console.log(`SOCKET HANDSHAKE: ${socket.handshake.itsvan}`)
     if(socket.handshake.query && socket.handshake.query.token) {
-        console.log(`Istvan: ${socket.handshake.itsvan}`)
+        console.log(`Istvan dentro: ${socket.handshake.itsvan.isItsvan}`)
         if(socket.handshake.itsvan.isItsvan === true){
             jwt.verify(socket.handshake.query.token, process.env.ACCESS_TOKEN_SECRET_NOT_EXPIRED, (error, decoded) => {
                 if (error) {
